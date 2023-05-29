@@ -1,47 +1,36 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Model;
+﻿using Model;
+using MVVMToolkit;
 
 namespace ViewModel;
 
-public class ChampionVM: INotifyPropertyChanged
+public class ChampionVM: ObservableObject<Champion>
 {
-    public Champion Model
-    {
-        get => _model;
-        set
-        {
-            if (_model.Equals(value)) return;
-            
-            _model = value;
-            OnPropertyChanged();
-        }
-    }
-    private Champion _model;
-
+    
     public string Name => Model.Name;
+
+    public string Bio
+    {
+        get => Model.Bio;
+        set => SetProperty(Model.Bio, value, Model, (model, value) => model.Bio = value);
+    }
 
     public string Icon
     {
         get => Model.Icon;
-        set
-        {
-            if(Model.Icon.Equals(value)) return;
-            
-            Model.Icon = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        set => SetProperty(Model.Icon, value, Model, (model, value) => model.Icon = value);
     }
     
-    public ChampionVM(Champion model)
+    public LargeImage Image
     {
-        _model = model;
+        get => Model.Image;
+        set => SetProperty(Model.Image, value, Model ,(model, value) => model.Image = value);
     }
+    
+    public ChampionClass Class
+    {
+        get => Model.Class;
+        set => SetProperty(Model.Class, value, Model, (model, value) => model.Class = value);
+    }
+    
+    public ChampionVM(Champion model) : base(model) { }
 }
