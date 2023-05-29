@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="LoLApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:pages="clr-namespace:LoLApp.Views.Pages"
+    FlyoutBehavior="Disabled">
+    <Shell.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Primary}"/>
+    </Shell.Behaviors>
+    
+    <TabBar>
+        <ShellContent Title="Home"
+                      ContentTemplate="{DataTemplate pages:HomePage}"
+                      Icon="lol_icon.png"
+                      Route="home"/>
+        <ShellContent Title="Champions"
+                        ContentTemplate="{DataTemplate pages:ChampionsPage}"
+                        Icon="sword_icon.png"
+                        Route="champions"/>
+    </TabBar>
+    
+</Shell>
