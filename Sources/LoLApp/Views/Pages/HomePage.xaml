@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LoLApp.Views.Pages.HomePage">
+
+    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+        <Image Source="league_of_legends.png" Margin="40"/>
+        <Label Text="League of Legends Data" 
+               FontSize="40" Margin="60,40" 
+               HorizontalTextAlignment="Center" />
+        <Label Text="Find information about champions skins and runes" 
+               FontSize="20" 
+               Margin="60,20"
+               HorizontalTextAlignment="Center"/>
+    </VerticalStackLayout>
+    
+</ContentPage>
