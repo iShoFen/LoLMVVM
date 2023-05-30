@@ -180,11 +180,20 @@ public class ObservableDictionary<TKey, TValue>: Dictionary<TKey, TValue>, INoti
         get => base[key];
         set
         {
-            var oldValue = base[key];
+            
+            var isValue = TryGetValue(key, out var oldValue);
             base[key] = value;
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, 
-                                                                     new KeyValuePair<TKey, TValue>(key, value), 
-                                                                     new KeyValuePair<TKey, TValue>(key, oldValue)));
+            OnCollectionChanged(isValue
+                                    ? new NotifyCollectionChangedEventArgs(
+                                        NotifyCollectionChangedAction.Replace,
+                                        new KeyValuePair<TKey, TValue>(key, value),
+                                        new KeyValuePair<TKey, TValue>(key, oldValue!)
+                                    )
+                                    : new NotifyCollectionChangedEventArgs(
+                                        NotifyCollectionChangedAction.Add,
+                                        new KeyValuePair<TKey, TValue>(key, value)
+                                    )
+            );
         }
     }
 }
