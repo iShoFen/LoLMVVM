@@ -13,4 +13,6 @@ public partial class ChampionsPage : ContentPage
         InitializeComponent();
         BindingContext = MgrVm;
     }
+    
+    
 }

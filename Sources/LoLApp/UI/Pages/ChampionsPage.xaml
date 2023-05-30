@@ -3,7 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:converters="clr-namespace:LoLApp.Converters;assembly=LoLApp"
+             xmlns:converters="clr-namespace:LoLApp.Converters"
              xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
              x:DataType="viewModel:ChampionMgrVM"
              x:Class="LoLApp.Views.Pages.ChampionsPage">
@@ -18,20 +18,41 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     
+    <Shell.TitleView>
+        <AbsoluteLayout>
+            <Label Text="Champions" FontAttributes="Bold" FontSize="Medium" TextColor="White"
+                   AbsoluteLayout.LayoutFlags="PositionProportional"
+                   AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"/>
+            
+            <Button Text="Ajouter" FontAttributes="Bold" FontSize="Medium"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="1, 0.5, -1, -1"/>
+        </AbsoluteLayout>
+    </Shell.TitleView>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <ListView ItemsSource="{Binding Champions}">
+        <ListView ItemsSource="{Binding Champions}"
+                  SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewModel:ChampionVM">
-                    <ImageCell
-                        Text="{Binding Name}"
-                        Detail="{Binding Class}"
-                        DetailColor="Black"
-                        TextColor="Black"/>
+                    <ViewCell>
+                        <Grid ColumnSpacing="10" Margin="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding Icon, Converter={StaticResource Base64ToImageSourceConverter}}" />
+                            <StackLayout Grid.Column="1" Orientation="Vertical">
+                                <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                <Label Text="{Binding Class}" />
+                            </StackLayout>
+                        </Grid>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
