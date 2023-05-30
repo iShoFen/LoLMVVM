@@ -59,8 +59,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Views\Views\" />
-		<Folder Include="Views\Pages\" />
+		<Folder Include="UI\Views\" />
+		<Folder Include="UI\Pages\" />
 	</ItemGroup>
 
 	<ItemGroup>
