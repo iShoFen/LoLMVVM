@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Model;
 using MVVMToolkit;
+using ViewModel.Enums;
 
 namespace ViewModel;
 
@@ -27,12 +28,19 @@ public class ChampionVM: ObservableObject<Champion>
         set => SetProperty(Model.Image, value, Model ,(model, value) => model.Image = value);
     }
     
-    public ChampionClass Class
+    public ChampionClassVM Class
     {
-        get => Model.Class;
-        set => SetProperty(Model.Class, value, Model, (model, value) => model.Class = value);
+        get => @class;
+        set
+        {
+            var set = SetProperty(@class, value, Model, (model, value) => model.Class = (ChampionClass) value);
+            if (set) @class = value;
+        } 
     }
+    private ChampionClassVM @class;
     
+    public string ClassImage => Class.GetImage();
+
     public ReadOnlyObservableCollection<SkinVM> Skins { get; private set; }
     private readonly ObservableCollection<SkinVM> skins = new();
 
