@@ -12,7 +12,6 @@
             EventName="Loaded"
             Command="{Binding LoadChampionsCommand}" />
     </ContentPage.Behaviors>
-
     
     <Shell.TitleView>
         <AbsoluteLayout>
