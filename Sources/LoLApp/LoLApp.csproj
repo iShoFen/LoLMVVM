@@ -59,11 +59,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="UI\Views\" />
-		<Folder Include="UI\Pages\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="Views\Pages\ChampionsPage.xaml">
 	    <SubType>Designer</SubType>
 	  </MauiXaml>

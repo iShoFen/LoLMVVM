@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Maui;
-using LoLApp.Views.Pages;
+using LoLApp.UI.Pages;
 using Microsoft.Extensions.Logging;
 using Model;
 using StubLib;
