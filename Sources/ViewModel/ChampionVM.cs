@@ -30,14 +30,9 @@ public class ChampionVM: ObservableObject<Champion>
     
     public ChampionClassVM Class
     {
-        get => @class;
-        set
-        {
-            var set = SetProperty(@class, value, Model, (model, value) => model.Class = (ChampionClass) value);
-            if (set) @class = value;
-        } 
+        get => (ChampionClassVM) Model.Class;
+        set => SetProperty(Model.Class, (ChampionClass) value, Model, (model, value) => model.Class = value);
     }
-    private ChampionClassVM @class;
     
     public string ClassImage => Class.GetImage();
 
