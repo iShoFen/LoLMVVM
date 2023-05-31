@@ -34,7 +34,7 @@ public class ChampionVM: ObservableObject<Champion>
     }
     
     public ReadOnlyObservableCollection<SkinVM> Skins { get; private set; }
-    private readonly ObservableCollection<SkinVM> skins;
+    private readonly ObservableCollection<SkinVM> skins = new();
 
     public ReadOnlyObservableDictionary<string, int> Characteristics { get; private set; }
     private readonly ObservableDictionary<string, int> characteristics;
@@ -44,7 +44,7 @@ public class ChampionVM: ObservableObject<Champion>
 
     public ChampionVM(Champion model) : base(model)
     {
-        skins = new ObservableCollection<SkinVM>(model.Skins.Select(skin => new SkinVM(skin)));
+        _ = model.Skins.Select(skin => new SkinVM(skin, this));
         Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
         
         characteristics = new ObservableDictionary<string, int>(model.Characteristics);

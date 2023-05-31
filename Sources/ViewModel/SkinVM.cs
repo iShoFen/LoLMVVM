@@ -9,7 +9,7 @@ public class SkinVM: ObservableObject<Skin>
     
     public string Name => Model.Name;
     
-    // public ChampionVM Champion => new(Model.Champion);
+    public ChampionVM Champion { get; }
     
     public string Description
     {
@@ -35,8 +35,9 @@ public class SkinVM: ObservableObject<Skin>
         set => SetProperty(Model.Price, value, Model, (model, value) => model.Price = value);
     }
 
-    public SkinVM(Skin model) : base(model)
+    public SkinVM(Skin model, ChampionVM champion) : base(model)
     {
-        // Champion.AddSkin(this);
+        Champion = champion;
+        Champion.AddSkin(this);
     }
 }
