@@ -3,6 +3,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:LoLApp.Converters"
+             xmlns:components="clr-namespace:LoLApp.UI.Components"
              x:Class="LoLApp.UI.Views.ChampionDetailSummary"
              x:Name="View">
     
@@ -15,16 +16,21 @@
                     Converter={StaticResource Base64ToImageSourceConverter}}"
                Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Start"/>
         
-        <AbsoluteLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
             <Label Text="{Binding Name, Source={x:Reference View}}"
-                   FontSize="Title"
-                   AbsoluteLayout.LayoutFlags="PositionProportional"
-                   AbsoluteLayout.LayoutBounds="0, 0, -1, -1"/>
+                   FontSize="Title"/>
             
-            <Label Text="{Binding Class, Source={x:Reference View}}"
-                   AbsoluteLayout.LayoutFlags="PositionProportional"
-                   AbsoluteLayout.LayoutBounds="1, 1, -1, -1"/>
-        </AbsoluteLayout>
+            <components:ImageText Grid.Column="2"
+                                  ImageSource="{Binding ClassImage, Source={x:Reference View}}"
+                                  ImageColor="{Binding ClassColor, Source={x:Reference View}}"
+                                  Text="{Binding Class, Source={x:Reference View}}"
+                                  Margin="10"/>
+        </Grid>
         
         <Label Text="{Binding Bio, Source={x:Reference View}}" />
     </VerticalStackLayout>

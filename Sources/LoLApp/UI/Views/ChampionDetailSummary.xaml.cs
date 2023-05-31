@@ -32,6 +32,21 @@ public partial class ChampionDetailSummary : ContentView
     public static readonly BindableProperty ClassProperty =
         BindableProperty.Create(nameof(Class), typeof(string), typeof(ChampionDetailSummary));
     
+    public string ClassImage
+    {
+        get => (string)GetValue(ClassImageProperty);
+        set => SetValue(ClassImageProperty, value);
+    }
+    public static readonly BindableProperty ClassImageProperty =
+        BindableProperty.Create(nameof(ClassImage), typeof(string), typeof(ChampionDetailSummary));
+
+    public Color ClassColor
+    {
+        get => (Color)GetValue(ClassColorProperty);
+        set => SetValue(ClassColorProperty, value);
+    }
+    public static readonly BindableProperty ClassColorProperty =
+        BindableProperty.Create(nameof(ClassColor), typeof(Color), typeof(ChampionDetailSummary));
     public string Bio
     {
         get => (string)GetValue(BioProperty);

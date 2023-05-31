@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LoLApp.UI.Components;
+﻿namespace LoLApp.UI.Components;
 
 public partial class CustomImageCell : ViewCell
 {

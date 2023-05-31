@@ -40,7 +40,10 @@
                 Base64Image="{Binding SelectedChampion.Image.Base64, FallbackValue='league_of_legends.png'}"
                 Name="{Binding SelectedChampion.Name, FallbackValue='Name' }"
                 Class="{Binding SelectedChampion.Class, FallbackValue='Class'}"
-                Bio="{Binding SelectedChampion.Bio, FallbackValue='Bio'}" />
+                ClassImage="{Binding SelectedChampion.ClassImage, FallbackValue='league_of_legends.png'}"
+                ClassColor="{StaticResource  Primary}"
+                Bio="{Binding SelectedChampion.Bio, FallbackValue='Bio'}"
+                />
         
             <Label Text="Caractérisitques" FontSize="Title" />
             
