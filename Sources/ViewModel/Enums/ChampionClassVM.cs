@@ -7,22 +7,22 @@ public enum ChampionClassVM
     [Image("")]
     Unknown,
     
-    [Image("assassin.png")]
+    [Image("assassin_icon.png")]
     Assassin,
     
-    [Image("fighter.png")]
+    [Image("fighter_icon.png")]
     Fighter,
     
-    [Image("mage.png")]
+    [Image("mage_icon.png")]
     Mage,
     
-    [Image("marksman.png")]
+    [Image("marksman_icon.png")]
     Marksman,
     
-    [Image("support.png")]
+    [Image("support_icon.png")]
     Support,
     
-    [Image("tank.png")]
+    [Image("tank_icon.png")]
     Tank,
 }
 
