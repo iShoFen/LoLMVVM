@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:LoLApp.UI.Views"
+             xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+             x:DataType="viewModel:ChampionMgrVM"
+             x:Class="LoLApp.UI.Pages.ChampionDetailPage">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+    <Shell.TitleView>
+        <AbsoluteLayout>
+            <Button Text="&lt; Back" FontAttributes="Bold" FontSize="Medium"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="0, 0.5, -1, -1"
+                    Clicked="Button_OnClicked"/>
+            
+            <Label Text="ChampionsPage" FontAttributes="Bold" FontSize="Medium" TextColor="White"
+                   AbsoluteLayout.LayoutFlags="PositionProportional"
+                   AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"/>
+            
+            <Button Text="Modifier" FontAttributes="Bold" FontSize="Medium"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="1, 0.5, -1, -1"/>
+        </AbsoluteLayout>
+    </Shell.TitleView>
+    
+    <ContentPage.Resources>
+        <Style TargetType="Label" BaseResourceKey="BaseLabelStyle">
+            <Setter Property="TextColor" Value="{StaticResource Primary}" />
+            <Setter Property="Margin" Value="10,20" />
+        </Style>
+    </ContentPage.Resources>
+    
+    <ScrollView>
+        <VerticalStackLayout Background="Black">
+            
+            <views:ChampionDetailSummary
+                Base64Image="{Binding SelectedChampion.Image.Base64, FallbackValue='league_of_legends.png'}"
+                Name="{Binding SelectedChampion.Name, FallbackValue='Name' }"
+                Class="{Binding SelectedChampion.Class, FallbackValue='Class'}"
+                Bio="{Binding SelectedChampion.Bio, FallbackValue='Bio'}" />
+        
+            <Label Text="Caractérisitques" FontSize="Title" />
+            
+            <Label Text="Compétences" FontSize="Title" />
+
+            <Label Text="Skins" FontSize="Title" />
+            
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>
