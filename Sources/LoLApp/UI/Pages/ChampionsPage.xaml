@@ -3,20 +3,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:converters="clr-namespace:LoLApp.Converters"
+             xmlns:components="clr-namespace:LoLApp.UI.Components"
              xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
              x:DataType="viewModel:ChampionMgrVM"
-             x:Class="LoLApp.Views.Pages.ChampionsPage">
+             x:Class="LoLApp.UI.Pages.ChampionsPage">
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior
             EventName="Loaded"
             Command="{Binding LoadChampionsCommand}" />
     </ContentPage.Behaviors>
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
+
     
     <Shell.TitleView>
         <AbsoluteLayout>
@@ -32,32 +28,43 @@
     
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <HorizontalStackLayout>
+            <Label Text="Chercher par nom"/>
+            <Label>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SortChampionCommand}"/>
+                </Label.GestureRecognizers>
+                <Label.Style>
+                    <Style TargetType="Label" BaseResourceKey="DefaultLabelStyle">
+                        <Setter Property="Text" Value="&#9660;"/>
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding}" Value="False">
+                                <Setter Property="Text" Value="&#9650;"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+        </HorizontalStackLayout>
         
-        <ListView ItemsSource="{Binding Champions}"
-                  SelectionMode="None">
+        <ListView Grid.Row="1" ItemsSource="{Binding Champions}"
+                  SelectionMode="None"
+                  ItemTapped="ListView_OnItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewModel:ChampionVM">
-                    <ViewCell>
-                        <Grid ColumnSpacing="10" Margin="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Image Source="{Binding Icon, Converter={StaticResource Base64ToImageSourceConverter}}" />
-                            <StackLayout Grid.Column="1" Orientation="Vertical">
-                                <Label Text="{Binding Name}" FontAttributes="Bold" />
-                                <Label Text="{Binding Class}" />
-                            </StackLayout>
-                        </Grid>
-                    </ViewCell>
+                    <components:CustomImageCell
+                         Base64Image="{Binding Icon}"
+                         Title="{Binding Name}"
+                         Subtitle="{Binding Class}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="1" Spacing="10">
+        <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="2" Spacing="10">
             <Button Text="&lt;" Command="{Binding PreviousPageCommand}" />
             <Label VerticalTextAlignment="Center">
                 <Label.Text>

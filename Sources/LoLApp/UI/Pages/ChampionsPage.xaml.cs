@@ -1,6 +1,7 @@
-﻿using ViewModel;
+﻿using LoLApp.UI.Pages;
+using ViewModel;
 
-namespace LoLApp.Views.Pages;
+namespace LoLApp.UI.Pages;
 
 public partial class ChampionsPage : ContentPage
 {
@@ -14,5 +15,9 @@ public partial class ChampionsPage : ContentPage
         BindingContext = MgrVm;
     }
     
-    
+    private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
+    {
+        MgrVm.SelectedChampion = e.Item as ChampionVM;
+        Navigation.PushAsync(new ChampionDetailPage(MgrVm));
+    }
 }

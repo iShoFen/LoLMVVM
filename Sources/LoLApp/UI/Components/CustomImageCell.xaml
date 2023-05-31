@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ViewCell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:LoLApp.Converters"
+             x:Class="LoLApp.UI.Components.CustomImageCell"
+             x:Name="View">
+    <Grid ColumnSpacing="10" Margin="2">
+        <Grid.Resources>
+            <converters:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter"/>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+        
+            <Image Source="{Binding Base64Image, Source={x:Reference View}, 
+                                         Converter={StaticResource Base64ToImageSourceConverter}}" />
+            
+            <StackLayout Grid.Column="1" Orientation="Vertical">
+                <Label Text="{Binding Title, Source={x:Reference View}}" />
+                <Label Text="{Binding Subtitle, Source={x:Reference View}}" />
+            </StackLayout>
+        </Grid>
+</ViewCell>
