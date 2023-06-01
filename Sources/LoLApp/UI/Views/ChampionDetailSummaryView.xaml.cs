@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LoLApp.UI.Views;
 
-public partial class ChampionDetailSummary : ContentView
+public partial class ChampionDetailSummaryView : ContentView
 {
     public string Base64Image
     {
@@ -14,7 +14,7 @@ public partial class ChampionDetailSummary : ContentView
         set => SetValue(Base64ImageProperty, value);
     }
     public static readonly BindableProperty Base64ImageProperty =
-        BindableProperty.Create(nameof(Base64Image), typeof(string), typeof(ChampionDetailSummary));
+        BindableProperty.Create(nameof(Base64Image), typeof(string), typeof(ChampionDetailSummaryView));
     
     public string Name 
     {
@@ -22,7 +22,7 @@ public partial class ChampionDetailSummary : ContentView
         set => SetValue(NameProperty, value);
     }
     public static readonly BindableProperty NameProperty =
-        BindableProperty.Create(nameof(Name), typeof(string), typeof(ChampionDetailSummary));
+        BindableProperty.Create(nameof(Name), typeof(string), typeof(ChampionDetailSummaryView));
     
     public string Class 
     {
@@ -30,7 +30,7 @@ public partial class ChampionDetailSummary : ContentView
         set => SetValue(ClassProperty, value);
     }
     public static readonly BindableProperty ClassProperty =
-        BindableProperty.Create(nameof(Class), typeof(string), typeof(ChampionDetailSummary));
+        BindableProperty.Create(nameof(Class), typeof(string), typeof(ChampionDetailSummaryView));
     
     public string ClassImage
     {
@@ -38,7 +38,7 @@ public partial class ChampionDetailSummary : ContentView
         set => SetValue(ClassImageProperty, value);
     }
     public static readonly BindableProperty ClassImageProperty =
-        BindableProperty.Create(nameof(ClassImage), typeof(string), typeof(ChampionDetailSummary));
+        BindableProperty.Create(nameof(ClassImage), typeof(string), typeof(ChampionDetailSummaryView));
 
     public Color ClassColor
     {
@@ -46,16 +46,16 @@ public partial class ChampionDetailSummary : ContentView
         set => SetValue(ClassColorProperty, value);
     }
     public static readonly BindableProperty ClassColorProperty =
-        BindableProperty.Create(nameof(ClassColor), typeof(Color), typeof(ChampionDetailSummary));
+        BindableProperty.Create(nameof(ClassColor), typeof(Color), typeof(ChampionDetailSummaryView));
     public string Bio
     {
         get => (string)GetValue(BioProperty);
         set => SetValue(BioProperty, value);
     }
     public static readonly BindableProperty BioProperty =
-        BindableProperty.Create(nameof(Bio), typeof(string), typeof(ChampionDetailSummary));
+        BindableProperty.Create(nameof(Bio), typeof(string), typeof(ChampionDetailSummaryView));
 
-    public ChampionDetailSummary()
+    public ChampionDetailSummaryView()
     {
         InitializeComponent();
     }

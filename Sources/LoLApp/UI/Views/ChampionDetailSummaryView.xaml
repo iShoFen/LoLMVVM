@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:LoLApp.Converters"
              xmlns:components="clr-namespace:LoLApp.UI.Components"
-             x:Class="LoLApp.UI.Views.ChampionDetailSummary"
+             x:Class="LoLApp.UI.Views.ChampionDetailSummaryView"
              x:Name="View">
     
     <ContentView.Resources>
@@ -23,7 +23,7 @@
                 <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
             <Label Text="{Binding Name, Source={x:Reference View}}"
-                   FontSize="Title"/>
+                   FontSize="30"/>
             
             <components:ImageText Grid.Column="2"
                                   ImageSource="{Binding ClassImage, Source={x:Reference View}}"
