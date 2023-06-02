@@ -1,6 +1,6 @@
 ﻿namespace LoLApp.UI.Components;
 
-public partial class CustomImageCell : ViewCell
+public partial class CustomImageCell : ContentView
 {
     public string Base64Image
     {
