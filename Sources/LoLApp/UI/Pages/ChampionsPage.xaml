@@ -55,10 +55,12 @@
                   ItemTapped="ListView_OnItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewModel:ChampionVM">
-                    <components:CustomImageCell
-                         Base64Image="{Binding Icon}"
-                         Title="{Binding Name}"
-                         Subtitle="{Binding Class}"/>
+                    <ViewCell>
+                        <components:CustomImageCell
+                            Base64Image="{Binding Icon}"
+                            Title="{Binding Name}"
+                            Subtitle="{Binding Class}"/>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

@@ -55,8 +55,21 @@
             <views:SkillsView Skills="{Binding SelectedChampion.Skills}"
                                 Margin="10"/>
 
-            <Label Text="Skins" FontSize="30" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <Label Text="Skins" FontSize="35" />
+                <Frame Grid.Column="1" CornerRadius="90" Padding="10" Margin="10" 
+                       BorderColor="{StaticResource Primary}"
+                       BackgroundColor="{StaticResource Primary}">
+                    <Button Text="+" FontSize="Title"  TextColor="Black" Padding="0" />
+                </Frame>
+            </Grid>
             
+            <views:SkinsViews Skins="{Binding SelectedChampion.Skins}"/>
         </VerticalStackLayout>
     </ScrollView>
     

@@ -15,7 +15,7 @@
 		<ApplicationTitle>LoLApp</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.lolapp</ApplicationId>
+		<ApplicationId>fr.uca.iut.lolapp</ApplicationId>
 		<ApplicationIdGuid>136ae152-b815-4a16-a875-779ededec1fd</ApplicationIdGuid>
 
 		<!-- Versions -->

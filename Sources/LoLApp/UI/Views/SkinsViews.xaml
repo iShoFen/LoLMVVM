@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:LoLApp.Converters"
+             x:Class="LoLApp.UI.Views.SkinsViews"
+             x:Name="View">
+    <ContentView.Resources>
+        <converters:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter"/>
+    </ContentView.Resources>
+    <ListView ItemsSource="{Binding Skins, Source={x:Reference View}}"
+              SelectionMode="None"
+              HasUnevenRows="True">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Border Padding="15,10" Margin="5" StrokeThickness="2"
+                            Stroke="{StaticResource Primary}"
+                            BackgroundColor="Black">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="0,10,10,10" />
+                        </Border.StrokeShape>
+                        <HorizontalStackLayout>
+                            <Image Source="{Binding Icon, Converter={StaticResource Base64ToImageSourceConverter}}" HeightRequest="55" />
+                            <Label Text="{Binding Name}" FontSize="Large" />
+                        </HorizontalStackLayout> 
+                    </Border>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+        
+    </ListView>
+</ContentView>
