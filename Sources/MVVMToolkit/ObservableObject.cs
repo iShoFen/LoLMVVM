@@ -7,7 +7,7 @@ namespace MVVMToolkit;
 /// <summary>
 /// Create a base class for all ViewModel with observable properties
 /// </summary>
-public class ObservableObject: INotifyPropertyChanged
+public abstract class ObservableObject: INotifyPropertyChanged
 {
     /// <summary>
     /// The event raised when a property changes
