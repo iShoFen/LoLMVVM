@@ -47,7 +47,12 @@ public class ChampionVM: ObservableObject<Champion>
 
     public ChampionVM(Champion model) : base(model)
     {
-        _ = model.Skins.Select(skin => new SkinVM(skin, this));
+        skins = new ObservableCollection<SkinVM>(model.Skins.Select(skin => new SkinVM(skin)
+                                                     {
+                                                         Champion = this
+                                                     }
+                                                 )
+        );
         Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
         
         characteristics = new ObservableDictionary<string, int>(model.Characteristics);
