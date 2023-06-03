@@ -29,6 +29,56 @@ public class ObservableDictionary<TKey, TValue>: Dictionary<TKey, TValue>, INoti
     public event PropertyChangedEventHandler? PropertyChanged;
     
     /// <summary>
+    /// Occurs when the collection changes, either by adding or removing an item.
+    /// </summary>
+    /// <param name="e">The event arguments</param>
+    protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e) 
+        => CollectionChanged?.Invoke(this, e);
+
+    /// <summary>
+    /// Occurs when a property value changes.
+    /// </summary>
+    /// <param name="propertyName">The name of the property that changed.</param>
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) 
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    
+    /// <summary>
+    /// Create a new <see cref="NotifyCollectionChangedEventArgs"/> for the <see cref="NotifyCollectionChangedAction.Add"/> action
+    /// </summary>
+    /// <param name="key">The key of the added item</param>
+    /// <param name="value">The value of the added item</param>
+    /// <returns>The <see cref="NotifyCollectionChangedEventArgs"/> for the <see cref="NotifyCollectionChangedAction.Add"/> action</returns>
+    protected static NotifyCollectionChangedEventArgs AddCollectionEventArgs(TKey key, TValue value)
+        => new(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value));
+    
+    /// <summary>
+    /// Create a new <see cref="NotifyCollectionChangedEventArgs"/> for the <see cref="NotifyCollectionChangedAction.Remove"/> action
+    /// </summary>
+    /// <param name="key">The key of the removed item</param>
+    /// <returns>The <see cref="NotifyCollectionChangedEventArgs"/> for the <see cref="NotifyCollectionChangedAction.Remove"/> action</returns>
+    protected static NotifyCollectionChangedEventArgs RemoveCollectionEventArgs(TKey key)
+        => new(NotifyCollectionChangedAction.Remove, key);
+    
+    /// <summary>
+    /// Create a new <see cref="NotifyCollectionChangedEventArgs"/> for the <see cref="NotifyCollectionChangedAction.Replace"/> action
+    /// </summary>
+    /// <param name="key">The key of the replaced item</param>
+    /// <param name="newValue">The new value of the replaced item</param>
+    /// <param name="oldValue">The old value of the replaced item</param>
+    /// <returns>The <see cref="NotifyCollectionChangedEventArgs"/> for the <see cref="NotifyCollectionChangedAction.Replace"/> action</returns>
+    protected static NotifyCollectionChangedEventArgs ReplaceCollectionEventArgs(TKey key, TValue newValue, TValue oldValue)
+        => new(NotifyCollectionChangedAction.Replace,
+            new KeyValuePair<TKey, TValue>(key, newValue),
+            new KeyValuePair<TKey, TValue>(key, oldValue));
+    
+    /// <summary>
+    /// Create a new <see cref="NotifyCollectionChangedEventArgs"/> for the <see cref="NotifyCollectionChangedAction.Reset"/> action
+    /// </summary>
+    /// <returns>The <see cref="NotifyCollectionChangedEventArgs"/> for the <see cref="NotifyCollectionChangedAction.Reset"/> action</returns>
+    protected static NotifyCollectionChangedEventArgs ResetCollectionEventArgs()
+        => new(NotifyCollectionChangedAction.Reset);
+    
+    /// <summary>
     /// Initializes a new instance of the <see cref="ObservableDictionary{TKey,TValue}"/> class.
     /// </summary>
     /// <param name="info">The <see cref="SerializationInfo"/> that holds all the data needed to serialize or deserialize an object.</param>
@@ -99,20 +149,6 @@ public class ObservableDictionary<TKey, TValue>: Dictionary<TKey, TValue>, INoti
         : base(collection, comparer) { }
     
     /// <summary>
-    /// Occurs when the collection changes, either by adding or removing an item.
-    /// </summary>
-    /// <param name="e">The event arguments</param>
-    protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e) 
-        => CollectionChanged?.Invoke(this, e);
-
-    /// <summary>
-    /// Occurs when a property value changes.
-    /// </summary>
-    /// <param name="propertyName">The name of the property that changed.</param>
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) 
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-    /// <summary>
     /// Adds the specified key and value to the dictionary.
     /// Hide the base Add method to raise the <see cref="CollectionChanged"/> event
     /// </summary>
@@ -121,8 +157,11 @@ public class ObservableDictionary<TKey, TValue>: Dictionary<TKey, TValue>, INoti
     public new void Add(TKey key, TValue value)
     {
         base.Add(key, value);
-        OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, 
-                                                                 new KeyValuePair<TKey, TValue>(key, value)));
+        
+        OnCollectionChanged(AddCollectionEventArgs(key, value));
+        OnPropertyChanged(nameof(Count));
+        OnPropertyChanged(nameof(Keys));
+        OnPropertyChanged(nameof(Values));
     }
     
     /// <summary>
@@ -136,8 +175,10 @@ public class ObservableDictionary<TKey, TValue>: Dictionary<TKey, TValue>, INoti
     {
         if (!base.TryAdd(key, value)) return false;
         
-        OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, 
-                                                                 new KeyValuePair<TKey, TValue>(key, value)));
+        OnCollectionChanged(AddCollectionEventArgs(key, value));
+        OnPropertyChanged(nameof(Count));
+        OnPropertyChanged(nameof(Keys));
+        OnPropertyChanged(nameof(Values));
         
         return true;
     }
@@ -150,6 +191,10 @@ public class ObservableDictionary<TKey, TValue>: Dictionary<TKey, TValue>, INoti
     {
         base.Clear();
         OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        
+        OnPropertyChanged(nameof(Count));
+        OnPropertyChanged(nameof(Keys));
+        OnPropertyChanged(nameof(Values));
     }
 
     /// <summary>
@@ -163,6 +208,10 @@ public class ObservableDictionary<TKey, TValue>: Dictionary<TKey, TValue>, INoti
         if (!base.Remove(key)) return false;
         
         OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, key));
+        
+        OnPropertyChanged(nameof(Count));
+        OnPropertyChanged(nameof(Keys));
+        OnPropertyChanged(nameof(Values));
         
         return true;
     }
@@ -183,17 +232,19 @@ public class ObservableDictionary<TKey, TValue>: Dictionary<TKey, TValue>, INoti
             
             var isValue = TryGetValue(key, out var oldValue);
             base[key] = value;
-            OnCollectionChanged(isValue
-                                    ? new NotifyCollectionChangedEventArgs(
-                                        NotifyCollectionChangedAction.Replace,
-                                        new KeyValuePair<TKey, TValue>(key, value),
-                                        new KeyValuePair<TKey, TValue>(key, oldValue!)
-                                    )
-                                    : new NotifyCollectionChangedEventArgs(
-                                        NotifyCollectionChangedAction.Add,
-                                        new KeyValuePair<TKey, TValue>(key, value)
-                                    )
-            );
+
+            if (isValue)
+            {
+                OnCollectionChanged(ReplaceCollectionEventArgs(key, value, oldValue!));
+                OnPropertyChanged(nameof(Values));
+            } 
+            else
+            {
+                OnCollectionChanged(AddCollectionEventArgs(key, value));
+                OnPropertyChanged(nameof(Count));
+                OnPropertyChanged(nameof(Keys));
+                OnPropertyChanged(nameof(Values));
+            }
         }
     }
 }
