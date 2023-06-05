@@ -11,7 +11,7 @@ namespace ViewModel;
 [SuppressMessage("Interoperability", "CA1416")]
 public class ChampionMgrVM: ObservableObject<IDataManager>
 {
-    public ReadOnlyObservableCollection<ChampionVM> Champions { get; private set; }
+    public ReadOnlyObservableCollection<ChampionVM> Champions { get; }
     private readonly ObservableCollection<ChampionVM> champions = new();
 
     public int Page => Model.ChampionsMgr.GetNbItems().Result / Count + 1;
@@ -93,5 +93,4 @@ public class ChampionMgrVM: ObservableObject<IDataManager>
         IsOrderedDescending = !IsOrderedDescending;
         await LoadChampions();
     }
-    
 }
