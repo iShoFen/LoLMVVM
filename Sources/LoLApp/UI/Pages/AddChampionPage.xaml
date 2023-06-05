@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:toolikt="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converters="clr-namespace:LoLApp.Converters"
+             xmlns:appvm="clr-namespace:LoLApp.ViewModel"
+             x:Class="LoLApp.UI.Pages.AddChampionPage"
+                x:DataType="appvm:ApplicationVM"
+             Title="AddChampionPage">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:IsNullToObjectConverter x:TypeArguments="system:String" x:Key="IsNullToObjectConverter" TrueObject="Ajouter" FalseObject="Modifier"/>
+            <toolikt:IsNullConverter x:Key="IsNullConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding CancelCommand}" />
+    </Shell.BackButtonBehavior>
+    
+    <Grid BackgroundColor="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollView>
+            
+        </ScrollView>
+        <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" Spacing="40" Margin="0,0,0,20">
+            <Button Text="{Binding MgrVm.SelectedChampion, 
+                           Converter={StaticResource IsNullToObjectConverter}}"
+                    Command="{Binding ValidateChampionCommand}"/>
+            
+            <Button Text="Annuler" Command="{Binding CancelCommand}"/>
+            
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>
