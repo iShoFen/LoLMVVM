@@ -1,16 +1,17 @@
-﻿using ViewModel;
+﻿using LoLApp.ViewModel;
+using ViewModel;
 
 namespace LoLApp.UI.Pages;
 
 public partial class ChampionDetailPage : ContentPage
 {
-    private ChampionMgrVM MgrVm { get; set; }
+    private ApplicationVM AppVM { get; set; }
     
-    public ChampionDetailPage(ChampionMgrVM mgrVm)
+    public ChampionDetailPage(ApplicationVM appVM)
     {
-        MgrVm = mgrVm;
+        AppVM = appVM;
         InitializeComponent();
-        BindingContext = MgrVm;
+        BindingContext = AppVM;
     }
 
     private void Button_OnClicked(object sender, EventArgs e)

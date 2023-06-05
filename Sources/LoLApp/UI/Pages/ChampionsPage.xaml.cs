@@ -1,23 +1,17 @@
-﻿using LoLApp.UI.Pages;
+﻿using LoLApp.ViewModel;
 using ViewModel;
 
 namespace LoLApp.UI.Pages;
 
 public partial class ChampionsPage : ContentPage
 {
+    private ApplicationVM AppVM { get; set; }
     
-    private ChampionMgrVM MgrVm { get; set; }
-    
-    public ChampionsPage(ChampionMgrVM mgrVm)
+    public ChampionsPage(ApplicationVM appVM)
     {
-        MgrVm = mgrVm;
+        AppVM = appVM;
         InitializeComponent();
-        BindingContext = MgrVm;
+        BindingContext = AppVM;
     }
     
-    private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
-    {
-        MgrVm.SelectedChampion = e.Item as ChampionVM;
-        Navigation.PushAsync(new ChampionDetailPage(MgrVm));
-    }
 }

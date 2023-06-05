@@ -4,18 +4,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:components="clr-namespace:LoLApp.UI.Components"
+             xmlns:appvm="clr-namespace:LoLApp.ViewModel"
              xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
-             x:DataType="viewModel:ChampionMgrVM"
-             x:Class="LoLApp.UI.Pages.ChampionsPage">
+             x:DataType="appvm:ApplicationVM"
+             x:Class="LoLApp.UI.Pages.ChampionsPage"
+             Title="Champions">
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior
             EventName="Loaded"
-            Command="{Binding LoadChampionsCommand}" />
+            Command="{Binding MgrVm.LoadChampionsCommand}" />
     </ContentPage.Behaviors>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter"/>
+            <toolkit:BoolToObjectConverter x:Key="BoolToObjectConverter" TrueObject="&#9660;" FalseObject="&#9650;"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     
     <Shell.TitleView>
         <AbsoluteLayout>
-            <Label Text="Champions" FontAttributes="Bold" FontSize="Medium" TextColor="White"
+            <Label Text="{Binding Title, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                   FontAttributes="Bold" FontSize="Medium" TextColor="White"
                    AbsoluteLayout.LayoutFlags="PositionProportional"
                    AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"/>
             
@@ -33,26 +43,21 @@
         </Grid.RowDefinitions>
         <HorizontalStackLayout>
             <Label Text="Chercher par nom"/>
-            <Label>
+            <Label Text="{Binding MgrVm.IsOrderedDescending, Converter={StaticResource BoolToObjectConverter}}">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SortChampionCommand}"/>
+                    <TapGestureRecognizer Command="{Binding MgrVm.SortChampionCommand}"/>
                 </Label.GestureRecognizers>
-                <Label.Style>
-                    <Style TargetType="Label" BaseResourceKey="DefaultLabelStyle">
-                        <Setter Property="Text" Value="&#9660;"/>
-                        <Style.Triggers>
-                            <DataTrigger TargetType="Label" Binding="{Binding}" Value="False">
-                                <Setter Property="Text" Value="&#9650;"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
             </Label>
         </HorizontalStackLayout>
         
-        <ListView Grid.Row="1" ItemsSource="{Binding Champions}"
-                  SelectionMode="None"
-                  ItemTapped="ListView_OnItemTapped">
+        <ListView Grid.Row="1" ItemsSource="{Binding MgrVm.Champions}"
+                  SelectionMode="None">
+            <ListView.Behaviors>
+                <toolkit:EventToCommandBehavior
+                    EventName="ItemTapped"
+                    Command="{Binding DetailPageCommand}"
+                    EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}"/>
+            </ListView.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewModel:ChampionVM">
                     <ViewCell>
@@ -66,16 +71,16 @@
         </ListView>
 
         <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="2" Spacing="10">
-            <Button Text="&lt;" Command="{Binding PreviousPageCommand}" />
+            <Button Text="&lt;" Command="{Binding MgrVm.PreviousPageCommand}" />
             <Label VerticalTextAlignment="Center">
                 <Label.Text>
                     <MultiBinding StringFormat="{} {0} / {1}">
-                        <Binding Path="Index"></Binding>
-                        <Binding Path="Page"></Binding>
+                        <Binding Path="MgrVm.Index"></Binding>
+                        <Binding Path="MgrVm.Page"></Binding>
                     </MultiBinding>
                 </Label.Text>
             </Label>
-            <Button Text="&gt;" Command="{Binding NextPageCommand}" />
+            <Button Text="&gt;" Command="{Binding MgrVm.NextPageCommand}" />
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>
