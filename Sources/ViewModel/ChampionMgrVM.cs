@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using Model;
 using MVVMToolkit;
+using ViewModel.ChampionVMs;
 
 namespace ViewModel;
 
@@ -43,7 +44,13 @@ public class ChampionMgrVM: ObservableObject<IDataManager>
         set => SetProperty(ref selectedChampion, value);
     }
     private ChampionVM? selectedChampion;
-
+    
+    public EditableChampionVM? EditableChampion
+    {
+        get => editableChampion;
+        set => SetProperty(ref editableChampion, value);
+    }
+    private EditableChampionVM? editableChampion;
 
     public ICommand LoadChampionsCommand { get; }
     
@@ -59,7 +66,7 @@ public class ChampionMgrVM: ObservableObject<IDataManager>
         PropertyChanged += LocalOnPropertyChanged;
         
         LoadChampionsCommand = new Command(ExecuteLoad);
-        SortChampionCommand = new Command(ExecuteSort);
+        SortChampionCommand = new Command(SortChampion);
         
         PreviousPageCommand = new Command(() => Index = index - 1, () => index > 0);
         NextPageCommand = new Command(() => Index = index + 1, () => index < Page - 1);
@@ -67,7 +74,10 @@ public class ChampionMgrVM: ObservableObject<IDataManager>
     
     private async void LocalOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName is not (nameof(Index) or nameof(Count))) return;
+        if (e.PropertyName is not 
+            (nameof(Index) or 
+             nameof(Count) or
+             nameof(EditableChampion))) return;
 
         await LoadChampions();
         (PreviousPageCommand as Command)?.ChangeCanExecute();
@@ -86,11 +96,23 @@ public class ChampionMgrVM: ObservableObject<IDataManager>
         }
     }
     
-    // Only done to avoid the warning for (using async on void method is not recommended)
-    private async void ExecuteSort() => await SortChampion();
-    private async Task SortChampion()
+    private async void SortChampion()
     {
         IsOrderedDescending = !IsOrderedDescending;
         await LoadChampions();
     }
+    
+    public async Task<bool> AddChampion(ChampionVM champion) 
+        => await Model.ChampionsMgr.AddItem(champion.Model) != null;
+
+    public async Task<bool> RemoveChampion(ChampionVM champion)
+    {
+        if (!await Model.ChampionsMgr.DeleteItem(champion.Model)) return false;
+        
+        champions.Remove(champion);
+        return true;
+    }
+
+    public async Task<bool> UpdateChampion(ChampionVM champion) 
+        => await Model.ChampionsMgr.UpdateItem(SelectedChampion!.Model, champion.Model) != null;
 }
