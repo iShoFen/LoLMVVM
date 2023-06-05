@@ -1,4 +1,4 @@
-﻿using ViewModel;
+﻿using ViewModel.SkinVms;
 
 namespace LoLApp.UI.Views;
 
