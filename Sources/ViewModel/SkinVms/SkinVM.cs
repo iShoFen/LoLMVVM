@@ -1,7 +1,8 @@
 ﻿using Model;
 using MVVMToolkit;
+using ViewModel.ChampionVMs;
 
-namespace ViewModel;
+namespace ViewModel.SkinVms;
 
 public class SkinVM: ObservableObject<Skin>
 {
@@ -23,10 +24,10 @@ public class SkinVM: ObservableObject<Skin>
         set => SetProperty(Model.Icon, value, Model, (model, value) => model.Icon = value);
     }
     
-    public LargeImage Image
+    public string Image
     {
-        get => Model.Image;
-        set => SetProperty(Model.Image, value, Model, (model, value) => model.Image = value);
+        get => Model.Image.Base64;
+        set => SetProperty(Model.Image.Base64, value, Model, (model, value) => model.Image.Base64 = value);
     }
     
     public float Price

@@ -2,42 +2,44 @@
 using Model;
 using MVVMToolkit;
 using ViewModel.Enums;
+using ViewModel.SkinVms;
 
-namespace ViewModel;
+namespace ViewModel.ChampionVMs;
 
 public class ChampionVM: ObservableObject<Champion>
 {
+    internal new Champion Model => base.Model;
     
     public string Name => Model.Name;
 
     public string Bio
     {
         get => Model.Bio;
-        set => SetProperty(Model.Bio, value, Model, (model, value) => model.Bio = value);
+        private set => SetProperty(Model.Bio, value, Model, (model, value) => model.Bio = value);
     }
 
     public string Icon
     {
         get => Model.Icon;
-        set => SetProperty(Model.Icon, value, Model, (model, value) => model.Icon = value);
+        private set => SetProperty(Model.Icon, value, Model, (model, value) => model.Icon = value);
     }
     
-    public LargeImage Image
+    public string Image
     {
-        get => Model.Image;
-        set => SetProperty(Model.Image, value, Model ,(model, value) => model.Image = value);
+        get => Model.Image.Base64;
+        private set => SetProperty(Model.Image.Base64, value, Model ,(model, value) => model.Image.Base64 = value);
     }
     
     public ChampionClassVM Class
     {
         get => (ChampionClassVM) Model.Class;
-        set => SetProperty(Model.Class, (ChampionClass) value, Model, (model, value) => model.Class = value);
+        private set => SetProperty(Model.Class, (ChampionClass) value, Model, (model, value) => model.Class = value);
     }
     
     public string ClassImage => Class.GetImage();
 
     public ReadOnlyObservableCollection<SkinVM> Skins { get; private set; }
-    private readonly ObservableCollection<SkinVM> skins = new();
+    private readonly ObservableCollection<SkinVM> skins;
 
     public ReadOnlyObservableDictionary<string, int> Characteristics { get; private set; }
     private readonly ObservableDictionary<string, int> characteristics;
@@ -45,7 +47,7 @@ public class ChampionVM: ObservableObject<Champion>
     public ReadOnlyObservableCollection<SkillVM> Skills { get; private set; }
     private readonly ObservableCollection<SkillVM> skills;
 
-    public ChampionVM(Champion model) : base(model)
+    public ChampionVM(Model.Champion model) : base(model)
     {
         skins = new ObservableCollection<SkinVM>(model.Skins.Select(skin => new SkinVM(skin)
                                                      {
