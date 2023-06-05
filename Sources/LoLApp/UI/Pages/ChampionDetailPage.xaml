@@ -23,7 +23,7 @@
             <Button Text="&lt; Back" FontSize="Medium"
                     AbsoluteLayout.LayoutFlags="PositionProportional"
                     AbsoluteLayout.LayoutBounds="0, 0.5, -1, -1"
-                    Clicked="Button_OnClicked"/>
+                    Command="{Binding BackCommand}"/>
             
             <Label Text="{Binding Title, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
                    FontAttributes="Bold" FontSize="Medium" TextColor="White"
@@ -32,7 +32,8 @@
             
             <Button Text="Modifier" FontSize="Medium"
                     AbsoluteLayout.LayoutFlags="PositionProportional"
-                    AbsoluteLayout.LayoutBounds="1, 0.5, -1, -1"/>
+                    AbsoluteLayout.LayoutBounds="1, 0.5, -1, -1"
+                    Command="{Binding EditChampionPageCommand}"/>
         </AbsoluteLayout>
     </Shell.TitleView>
     
@@ -40,10 +41,10 @@
         <VerticalStackLayout Background="Black">
             
             <views:ChampionDetailSummaryView
-                Base64Image="{Binding MgrVm.SelectedChampion.Image.Base64}"
+                Base64Image="{Binding MgrVm.SelectedChampion.Image, FallbackValue='league_of_legends.png'}"
                 Name="{Binding MgrVm.SelectedChampion.Name, FallbackValue='Name' }"
                 Class="{Binding MgrVm.SelectedChampion.Class, FallbackValue='Class'}"
-                ClassImage="{Binding MgrVm.SelectedChampion.ClassImage}"
+                ClassImage="{Binding MgrVm.SelectedChampion.ClassImage, FallbackValue='lol_icon.png'}"
                 ClassColor="{StaticResource  Primary}"
                 Bio="{Binding MgrVm.SelectedChampion.Bio, FallbackValue='Bio'}"/>
         

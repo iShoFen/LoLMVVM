@@ -1,5 +1,4 @@
 ﻿using LoLApp.ViewModel;
-using ViewModel;
 
 namespace LoLApp.UI.Pages;
 
@@ -13,10 +12,11 @@ public partial class ChampionDetailPage : ContentPage
         InitializeComponent();
         BindingContext = AppVM;
     }
-
-    private void Button_OnClicked(object sender, EventArgs e)
+    
+    protected override bool OnBackButtonPressed()
     {
-        Navigation.PopAsync();
+        AppVM.BackCommand.Execute(null);
+        return true;
     }
 }
 
