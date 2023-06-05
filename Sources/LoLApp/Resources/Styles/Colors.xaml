@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Color x:Key="Primary">#D1B976</Color>
+    <Color x:Key="PrimaryVariant">#F0E7B7</Color>
     <Color x:Key="Secondary">#212121</Color>
     <Color x:Key="SecondaryVariant">#AEAEB1</Color>
     <Color x:Key="Tertiary">#FE3C30</Color>
@@ -19,7 +20,9 @@
     <Color x:Key="Gray600">#404040</Color>
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
+    
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
+    <SolidColorBrush x:Key="PrimaryVariantBrush" Color="{StaticResource PrimaryVariant}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
     <SolidColorBrush x:Key="SecondaryVariantBrush" Color="{StaticResource SecondaryVariant}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
