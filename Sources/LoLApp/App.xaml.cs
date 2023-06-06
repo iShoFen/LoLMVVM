@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls.PlatformConfiguration;
-using Microsoft.Maui.Platform;
+﻿using Microsoft.Maui.Platform;
 
 namespace LoLApp;
 
@@ -13,14 +12,16 @@ public partial class App : Application
 		MainPage = new AppShell();
 	}
 
-	private static void InitStyleHandlers()
+	private void InitStyleHandlers()
 	{
 		Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("LoLCustomization", (handler, _) =>
 			{
 				#if __ANDROID__
-					var primaryColor = (Color) Resources.MergedDictionaries.First()["Primary"];
-					handler.PlatformView.TextCursorDrawable!.SetTint(primaryColor.ToPlatform());
-					handler.PlatformView.SetBackgroundColor(Colors.Transparent.ToPlatform());
+					#pragma warning disable CA1416
+						var primaryColor = (Color) Resources.MergedDictionaries.First()["Primary"];
+						handler.PlatformView.TextCursorDrawable!.SetTint(primaryColor.ToPlatform());
+						handler.PlatformView.SetBackgroundColor(Colors.Transparent.ToPlatform());
+					#pragma warning restore CA1416
 				#endif
 			}
 		);

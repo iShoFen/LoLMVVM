@@ -67,10 +67,5 @@
                                        AddCommand="{Binding AddCharacteristicCommand, 
                                                     Source={x:Reference View}}" />
         
-        <RadioButtonGroup GroupName="OUI">
-            <RadioButton Text="OUI" />
-            <RadioButton Text="NON" />
-        </RadioButtonGroup>
-        
     </Grid>
 </ContentView>
