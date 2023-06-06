@@ -89,7 +89,7 @@ public class EditableChampionVM: ObservableObject
     
     public void AddCharacteristic(string key, int value)
     {
-        characteristics.Add(key, value);
+        characteristics[key] = value;
     }
     
     public void RemoveSkill(SkillVM skill)

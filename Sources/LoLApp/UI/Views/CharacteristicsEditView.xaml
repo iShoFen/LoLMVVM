@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:LoLApp.Converters"
+             xmlns:components="clr-namespace:LoLApp.UI.Components"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             x:Class="LoLApp.UI.Views.CharacteristicsEditView"
+             x:Name="View">
+    
+    <ContentView.Resources>
+        <converters:ObjectsToKVP x:TypeArguments="system:String, system:Int32" x:Key="ObjectsToKvp"/>
+    </ContentView.Resources>
+    
+    <VerticalStackLayout>
+        <Frame BackgroundColor="{StaticResource Black}">
+            <ListView Margin="10"
+                      ItemsSource="{Binding Characteristics, Source={x:Reference View}}"
+                      SelectionMode="None"
+                      VerticalScrollBarVisibility="Never"
+                      HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Border StrokeThickness="0" BackgroundColor="{StaticResource PrimaryVariant}"
+                                    Margin="00,5">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,0,10" />
+                                </Border.StrokeShape>
+                                
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Label Text="{Binding Key}" 
+                                           FontSize="Large"
+                                           TextColor="Black"
+                                           Margin="10"/>
+                                    
+                                    <Label Grid.Column="1" Text="{Binding Value}" 
+                                           FontSize="Large"
+                                           TextColor="Black"
+                                           Margin="10"/>
+                                </Grid>
+                            </Border>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
+        
+        <Grid Margin="10,10,0,10" ColumnSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <components:RoundEntry
+                Text="{Binding Key, Source={x:Reference View}}"
+                Placeholder="Caractéristique"/>
+            
+            <components:RoundEntry Grid.Column="1"
+                Text="{Binding Value, Source={x:Reference View}}"
+                Keyboard="Numeric"
+                Placeholder="0"/>
+            
+            <components:PlusButton Grid.Column="2" Padding="-10"
+                                   Command="{Binding AddCommand, Source={x:Reference View}}">
+                <components:PlusButton.CommandParameter>
+                    <MultiBinding Converter="{StaticResource ObjectsToKvp}">
+                        <Binding Path="Key" Source="{x:Reference View}"/>
+                        <Binding Path="Value" Source="{x:Reference View}"/>
+                    </MultiBinding>
+                </components:PlusButton.CommandParameter>
+            </components:PlusButton>
+        </Grid>
+    </VerticalStackLayout>
+</ContentView>

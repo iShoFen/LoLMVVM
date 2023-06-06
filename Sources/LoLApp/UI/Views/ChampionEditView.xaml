@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:LoLApp.UI.Components"
+             xmlns:views="clr-namespace:LoLApp.UI.Views"
+             xmlns:converters="clr-namespace:LoLApp.Converters"
+             x:Class="LoLApp.UI.Views.ChampionEditView"
+             x:Name="View">
+    <ContentView.Resources>
+        <converters:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter" />
+        <Style TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryVariant}"/>
+            <Setter Property="BorderColor" Value="{StaticResource PrimaryVariant}"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="CornerRadius" Value="0"/>
+        </Style>
+    </ContentView.Resources>
+    
+    <Grid Margin="10" RowSpacing="20" ColumnSpacing="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Label Grid.Row="0" Grid.Column="0" Text="Nom :" VerticalOptions="Center"/>
+        <components:RoundEntry Grid.Row="0" Grid.Column="1"
+                               Text="{Binding ChampionVm.Name, Source={x:Reference View}}"
+                               Placeholder="Nom du champion"
+                               IsEnabled="{Binding IsNew, Source={x:Reference View}}" />
+        
+        <Label Grid.Row="1" Grid.Column="0" Text="Icone : " VerticalOptions="Center"/>
+        <Frame Grid.Row="1" Grid.Column="1"
+               HorizontalOptions="Start"
+               HeightRequest="50" WidthRequest="50">
+            <Image Source="{Binding ChampionVm.Icon, Source={x:Reference View}, Converter={StaticResource Base64ToImageSourceConverter}, ConverterParameter='lol_icon.png'}"
+                   HeightRequest="50" WidthRequest="50" Aspect="AspectFit"/>
+        </Frame>
+        
+        <Label Grid.Row="2" Grid.Column="0" Text="Image :" VerticalOptions="Center"/>
+        <Frame Grid.Row="2" Grid.Column="1">
+            <Image Source="{Binding ChampionVm.Image, Source={x:Reference View}, Converter={StaticResource Base64ToImageSourceConverter}, ConverterParameter='league_of_legends.png'}" 
+                   WidthRequest="-1" HeightRequest="-1" Aspect="AspectFit"/>
+        </Frame>
+        
+        <Label Grid.Row="3" Grid.Column="0" Text="Bio :" VerticalOptions="Center"/>
+        <Editor Grid.Row="3" Grid.Column="1" Text="{Binding ChampionVm.Bio, Source={x:Reference View}}" FontSize="Large"
+                BackgroundColor="{StaticResource PrimaryVariant}"/>
+        
+        <Label Grid.Row="4" Grid.Column="0" Text="Classe :" VerticalOptions="Center"/>
+        
+        
+        <Label Grid.Row="5" Grid.Column="0" Text="Caractéristiques : "/>
+        <views:CharacteristicsEditView Grid.Row="5" Grid.Column="1" 
+                                       Characteristics="{Binding ChampionVm.Characteristics, 
+                                                         Source={x:Reference View}}"
+                                       AddCommand="{Binding AddCharacteristicCommand, 
+                                                    Source={x:Reference View}}" />
+        
+        <RadioButtonGroup GroupName="OUI">
+            <RadioButton Text="OUI" />
+            <RadioButton Text="NON" />
+        </RadioButtonGroup>
+        
+    </Grid>
+</ContentView>
