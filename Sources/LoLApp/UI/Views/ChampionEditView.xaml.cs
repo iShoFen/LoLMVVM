@@ -21,6 +21,14 @@ public partial class ChampionEditView : ContentView
     public static readonly BindableProperty IsNewProperty =
         BindableProperty.Create(nameof(IsNew), typeof(bool), typeof(ChampionEditView), true);
     
+    public ICommand FilePickerCommand
+    {
+        get => (ICommand)GetValue(FilePickerCommandProperty);
+        set => SetValue(FilePickerCommandProperty, value);
+    }
+    public static readonly BindableProperty FilePickerCommandProperty =
+        BindableProperty.Create(nameof(FilePickerCommand), typeof(ICommand), typeof(ChampionEditView));
+    
     public ICommand AddCharacteristicCommand
     {
         get => (ICommand)GetValue(AddCharacteristicCommandProperty);

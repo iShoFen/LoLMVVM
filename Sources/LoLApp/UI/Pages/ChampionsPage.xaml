@@ -77,8 +77,8 @@
             <Label VerticalTextAlignment="Center">
                 <Label.Text>
                     <MultiBinding StringFormat="{} {0} / {1}">
-                        <Binding Path="MgrVm.Index"></Binding>
-                        <Binding Path="MgrVm.Page"></Binding>
+                        <Binding Path="MgrVm.Index"/>
+                        <Binding Path="MgrVm.Page"/>
                     </MultiBinding>
                 </Label.Text>
             </Label>

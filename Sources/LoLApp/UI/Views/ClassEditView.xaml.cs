@@ -1,14 +1,16 @@
-﻿namespace LoLApp.UI.Views;
+﻿using ViewModel.Enums;
+
+namespace LoLApp.UI.Views;
 
 public partial class ClassEditView : ContentView
 {
-    public Enum SelectedItem
+    public ChampionClassVM SelectedItem
     {
-        get => (Enum)GetValue(SelectedItemProperty);
+        get => (ChampionClassVM)GetValue(SelectedItemProperty);
         set => SetValue(SelectedItemProperty, value);
     }
     public static readonly BindableProperty SelectedItemProperty =
-        BindableProperty.Create(nameof(SelectedItem), typeof(Enum), typeof(ClassEditView), default, BindingMode.TwoWay);
+        BindableProperty.Create(nameof(SelectedItem), typeof(ChampionClassVM), typeof(ClassEditView), default, BindingMode.TwoWay);
     
     public ClassEditView()
     {

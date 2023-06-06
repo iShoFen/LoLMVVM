@@ -43,14 +43,21 @@
         <Frame Grid.Row="1" Grid.Column="1"
                HorizontalOptions="Start"
                HeightRequest="50" WidthRequest="50">
-            <Image Source="{Binding ChampionVm.Icon, Source={x:Reference View}, Converter={StaticResource Base64ToImageSourceConverter}, ConverterParameter='lol_icon.png'}"
-                   HeightRequest="50" WidthRequest="50" Aspect="AspectFit"/>
+            <ImageButton Source="{Binding ChampionVm.Icon, Source={x:Reference View}, 
+                                  Converter={StaticResource Base64ToImageSourceConverter}, ConverterParameter='lol_icon.png'}"
+                         Command="{Binding FilePickerCommand, Source={x:Reference View}}"
+                            CommandParameter="Icon"
+                         HeightRequest="50" WidthRequest="50" Aspect="AspectFit"/>
+     
         </Frame>
         
         <Label Grid.Row="2" Grid.Column="0" Text="Image :" VerticalOptions="Center"/>
         <Frame Grid.Row="2" Grid.Column="1">
-            <Image Source="{Binding ChampionVm.Image, Source={x:Reference View}, Converter={StaticResource Base64ToImageSourceConverter}, ConverterParameter='league_of_legends.png'}" 
-                   WidthRequest="-1" HeightRequest="-1" Aspect="AspectFit"/>
+            <ImageButton Source="{Binding ChampionVm.Image, Source={x:Reference View}, 
+                                  Converter={StaticResource Base64ToImageSourceConverter}, ConverterParameter='league_of_legends.png'}"
+                         Command="{Binding FilePickerCommand, Source={x:Reference View}}"
+                         CommandParameter="Image"
+                         WidthRequest="-1" HeightRequest="-1" Aspect="AspectFit"/>
         </Frame>
         
         <Label Grid.Row="3" Grid.Column="0" Text="Bio :" VerticalOptions="Center"/>
@@ -68,6 +75,5 @@
                                                          Source={x:Reference View}}"
                                        AddCommand="{Binding AddCharacteristicCommand, 
                                                     Source={x:Reference View}}" />
-        
     </Grid>
 </ContentView>

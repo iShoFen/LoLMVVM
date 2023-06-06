@@ -48,6 +48,7 @@
         <ScrollView Grid.Row="1">
             <views:ChampionEditView ChampionVm="{Binding EditableChampion}"
                                     AddCharacteristicCommand="{Binding AddCharacteristicCommand}"
+                                    FilePickerCommand="{Binding FilePickerCommand}"
                                     IsNew="{Binding SelectedChampion, Converter={StaticResource IsNullConverter}}"/>
         </ScrollView>
         
