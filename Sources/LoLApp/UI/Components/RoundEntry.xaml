@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LoLApp.UI.Components.RoundEntry"
+             x:Name="View">
+    <Frame CornerRadius="10" Padding="10">
+        <Entry  Text="{Binding Text, Source={x:Reference View}}" FontSize="Medium" Margin="0,0"
+                Placeholder="{Binding Placeholder, Source={x:Reference View}}" PlaceholderColor="Gray"
+                IsEnabled="{Binding IsEnabled, Source={x:Reference View}}"
+                Keyboard="{Binding Keyboard, Source={x:Reference View}}" />
+    </Frame>
+</ContentView>
