@@ -39,8 +39,7 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
     }
 
     private bool isOrderedDescending;
-
-
+    
     public ICommand LoadChampionsCommand { get; }
 
     public ICommand SortChampionCommand { get; }

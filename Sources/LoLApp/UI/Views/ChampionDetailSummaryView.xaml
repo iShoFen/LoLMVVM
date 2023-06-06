@@ -29,6 +29,7 @@
                                   ImageSource="{Binding ClassImage, Source={x:Reference View}}"
                                   ImageColor="{Binding ClassColor, Source={x:Reference View}}"
                                   Text="{Binding Class, Source={x:Reference View}}"
+                                  TextColor="{Binding ClassColor, Source={x:Reference View}}"
                                   Margin="10"/>
         </Grid>
         

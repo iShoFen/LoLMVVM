@@ -47,7 +47,7 @@ public class ChampionVM: ObservableObject<Champion>
     public ReadOnlyObservableCollection<SkillVM> Skills { get; private set; }
     private readonly ObservableCollection<SkillVM> skills;
 
-    public ChampionVM(Model.Champion model) : base(model)
+    public ChampionVM(Champion model) : base(model)
     {
         skins = new ObservableCollection<SkinVM>(model.Skins.Select(skin => new SkinVM(skin)
                                                      {

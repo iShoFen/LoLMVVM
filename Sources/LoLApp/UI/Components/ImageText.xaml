@@ -17,6 +17,7 @@
             </Image.Behaviors>
         </Image>
         <Label Grid.Row="1" Text="{Binding Text, Source={x:Reference View}}"
+               TextColor="{Binding TextColor, Source={x:Reference View}}"
                Margin="0"/>
     </Grid>
 </ContentView>
