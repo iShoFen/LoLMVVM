@@ -14,7 +14,7 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
     public ReadOnlyObservableCollection<ChampionVM> Champions { get; }
     private readonly ObservableCollection<ChampionVM> champions = new();
 
-    public int Page => Model.ChampionsMgr.GetNbItems().Result / Count + 1;
+    public int Page => (int) MathF.Ceiling((float) Model.ChampionsMgr.GetNbItems().Result / Count);
 
     public int Index
     {
@@ -116,7 +116,8 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
     public async Task<bool> RemoveChampion(ChampionVM champion)
     {
         if (!await Model.ChampionsMgr.DeleteItem(champion.Model)) return false;
-        champions.Remove(champion);
+
+        await Update();
 
         return true;
     }
