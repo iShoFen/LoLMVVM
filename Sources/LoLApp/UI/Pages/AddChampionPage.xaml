@@ -4,16 +4,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:toolikt="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:views="clr-namespace:LoLApp.UI.Views"
              xmlns:converters="clr-namespace:LoLApp.Converters"
              xmlns:appvm="clr-namespace:LoLApp.ViewModel"
              x:Class="LoLApp.UI.Pages.AddChampionPage"
-                x:DataType="appvm:ApplicationVM"
+             x:DataType="appvm:ApplicationVM"
              Title="AddChampionPage">
     
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converters:IsNullToObjectConverter x:TypeArguments="system:String" x:Key="IsNullToObjectConverter" TrueObject="Ajouter" FalseObject="Modifier"/>
+            <converters:IsNullToObjectConverter x:TypeArguments="system:String" x:Key="IsNullToObjectConverterButton" TrueObject="Ajouter" FalseObject="Modifier"/>
+            <converters:IsNullToObjectConverter x:TypeArguments="system:String" x:Key="IsNullToObjectConverterTitle" TrueObject="Nouveau Champion" FalseObject="Modifier le Champion"/>
             <toolikt:IsNullConverter x:Key="IsNullConverter"/>
+            
+            <Style TargetType="Label" BaseResourceKey="BaseLabelStyle">
+                <Setter Property="TextColor" Value="{StaticResource Primary}"/>
+                <Setter Property="FontSize" Value="Body"/>
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     
@@ -23,15 +30,30 @@
     
     <Grid BackgroundColor="Black">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ScrollView>
-            
+        
+        <VerticalStackLayout Margin="10">
+            <Label Text="{Binding SelectedChampion, 
+                          Converter={StaticResource IsNullToObjectConverterTitle}}" 
+                   HorizontalOptions="Center"
+                   FontSize="30" />
+            <BoxView WidthRequest="-1"  HeightRequest="1"
+                     Margin="90,5"
+                     Color="{StaticResource Primary}"/>
+        </VerticalStackLayout>
+        
+        <ScrollView Grid.Row="1">
+            <views:ChampionEditView ChampionVm="{Binding EditableChampion}"
+                                    AddCharacteristicCommand="{Binding AddCharacteristicCommand}"
+                                    IsNew="{Binding SelectedChampion, Converter={StaticResource IsNullConverter}}"/>
         </ScrollView>
-        <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" Spacing="40" Margin="0,0,0,20">
-            <Button Text="{Binding MgrVm.SelectedChampion, 
-                           Converter={StaticResource IsNullToObjectConverter}}"
+        
+        <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="40" Margin="0,20">
+            <Button Text="{Binding SelectedChampion, 
+                           Converter={StaticResource IsNullToObjectConverterButton}}"
                     Command="{Binding ValidateChampionCommand}"/>
             
             <Button Text="Annuler" Command="{Binding CancelCommand}"/>

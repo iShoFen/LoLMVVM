@@ -13,10 +13,6 @@ public partial class AddChampionPage : ContentPage
         BindingContext = AppVM;
     }
     
-    protected override bool OnBackButtonPressed()
-    {
-        AppVM.CancelCommand.Execute(null);
-        return true;
-    }
+    protected override bool OnBackButtonPressed() => true;
 }
 

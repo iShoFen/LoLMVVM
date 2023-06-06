@@ -3,6 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:LoLApp.UI.Views"
+             xmlns:components="clr-namespace:LoLApp.UI.Components"
              xmlns:appvm="clr-namespace:LoLApp.ViewModel"
              x:DataType="appvm:ApplicationVM"
              x:Class="LoLApp.UI.Pages.ChampionDetailPage"
@@ -41,23 +42,23 @@
         <VerticalStackLayout Background="Black">
             
             <views:ChampionDetailSummaryView
-                Base64Image="{Binding MgrVm.SelectedChampion.Image, FallbackValue='league_of_legends.png'}"
-                Name="{Binding MgrVm.SelectedChampion.Name, FallbackValue='Name' }"
-                Class="{Binding MgrVm.SelectedChampion.Class, FallbackValue='Class'}"
-                ClassImage="{Binding MgrVm.SelectedChampion.ClassImage, FallbackValue='lol_icon.png'}"
+                Base64Image="{Binding SelectedChampion.Image, FallbackValue='league_of_legends.png'}"
+                Name="{Binding SelectedChampion.Name, FallbackValue='Name' }"
+                Class="{Binding SelectedChampion.Class, FallbackValue='Class'}"
+                ClassImage="{Binding SelectedChampion.ClassImage, FallbackValue='lol_icon.png'}"
                 ClassColor="{StaticResource  Primary}"
-                Bio="{Binding MgrVm.SelectedChampion.Bio, FallbackValue='Bio'}"/>
+                Bio="{Binding SelectedChampion.Bio, FallbackValue='Bio'}"/>
         
-            <Label Text="Caractérisitques" FontSize="30" />
+            <Label Text="Caractéristiques" FontSize="30" />
             
-            <views:CharacteristicsView Characteristics="{Binding MgrVm.SelectedChampion.Characteristics}"
+            <views:CharacteristicsView Characteristics="{Binding SelectedChampion.Characteristics}"
                                        Margin="10"/>
             
             <Label Text="Compétences" FontSize="30" />
             
-            <views:SkillsView Skills="{Binding MgrVm.SelectedChampion.Skills}"
+            <views:SkillsView Skills="{Binding SelectedChampion.Skills}"
                                 Margin="10"/>
-
+            
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -65,14 +66,10 @@
                 </Grid.ColumnDefinitions>
                 
                 <Label Text="Skins" FontSize="35" />
-                <Frame Grid.Column="1" CornerRadius="90" Padding="10" Margin="10" 
-                       BorderColor="{StaticResource Primary}"
-                       BackgroundColor="{StaticResource Primary}">
-                    <Button Text="+" FontSize="Title"  TextColor="Black" Padding="0" />
-                </Frame>
+                <components:PlusButton Grid.Column="1"/>
             </Grid>
             
-            <views:SkinsViews Skins="{Binding MgrVm.SelectedChampion.Skins}"/>
+            <views:SkinsViews Skins="{Binding SelectedChampion.Skins}"/>
         </VerticalStackLayout>
     </ScrollView>
     
