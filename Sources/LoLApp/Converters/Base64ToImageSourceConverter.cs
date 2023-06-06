@@ -7,8 +7,10 @@ public class Base64ToImageSourceConverter: ByteArrayToImageSourceConverter, IVal
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not string base64) return null;
-
+        if (value is not string base64 || string.IsNullOrWhiteSpace(base64))
+            if (parameter is not string parameterString || string.IsNullOrWhiteSpace(parameterString)) return null;
+            else base64 = parameterString;
+        
         try
         {
             var bytes = System.Convert.FromBase64String(base64);
