@@ -5,6 +5,7 @@ using LoLApp.UI.Pages;
 using MVVMToolkit;
 using ViewModel;
 using ViewModel.ChampionVMs;
+using System;
 
 namespace LoLApp.ViewModel;
 
@@ -34,9 +35,11 @@ public class ApplicationVM: ObservableObject
     
     public ICommand EditChampionPageCommand { get; }
     
-    public ICommand ValidateChampionCommand { get; }
-    
+    public ICommand FilePickerCommand { get; }
+        
     public ICommand AddCharacteristicCommand { get; }
+    
+    public ICommand ValidateChampionCommand { get; }
     
     public ICommand CancelCommand { get; }
     
@@ -53,12 +56,14 @@ public class ApplicationVM: ObservableObject
         AddChampionPageCommand = new Command(OnAddChampionPageCommand);
         EditChampionPageCommand = new Command(OnEditChampionPageCommand);
         
+        FilePickerCommand = new Command<string>(OnFilePickerCommand);
         AddCharacteristicCommand = new Command<KeyValuePair<string, int>>(OnAddCharacteristicCommand);
         ValidateChampionCommand = new Command(OnValidateChampionCommand);
         
         CancelCommand = new Command(OnCancelCommand);
         BackCommand = new Command(OnBackCommand);
     }
+
     
     private async void OnDetailPageCommand(ChampionVM championVm)
     {
@@ -76,6 +81,29 @@ public class ApplicationVM: ObservableObject
     {
         EditableChampion = new EditableChampionVM(SelectedChampion!);
         await navigation.PushModalAsync(new AddChampionPage(this));
+    }
+    
+    private async void OnFilePickerCommand(string propertyName)
+    {
+        try
+        {
+            var options = new PickOptions
+            {
+                PickerTitle = "Please select a file",
+                FileTypes = FilePickerFileType.Images,
+            };
+
+            var result = await FilePicker.Default.PickAsync(options);
+            if (result is null) return;
+            
+            var stream = await result.OpenReadAsync();
+            var bytes = new byte[stream.Length];
+            _ = await stream.ReadAsync(bytes.AsMemory(0, (int)stream.Length)); 
+            var base64 = Convert.ToBase64String(bytes);
+            
+            EditableChampion!.GetType().GetProperty(propertyName)?.SetValue(EditableChampion, base64);
+        }
+        catch (TaskCanceledException) {  /* ignored */ }
     }
     
     private void OnAddCharacteristicCommand(KeyValuePair<string, int> kvp) 
