@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:LoLApp.Converters"
+             xmlns:components="clr-namespace:LoLApp.UI.Components"
+             xmlns:viewmodel="clr-namespace:ViewModel.Enums;assembly=ViewModel"
+             x:Class="LoLApp.UI.Views.ClassEditView"
+             x:Name="View">
+    <ContentView.Resources>
+        <Style TargetType="Border">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryVariant}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource Primary}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        
+        <converters:EnumToValuesConverter x:TypeArguments="viewmodel:ChampionClassVM" x:Key="EnumToValuesConverter"/>
+        <converters:EnumToImageSource x:TypeArguments="viewmodel:ChampionClassVM" x:Key="EnumToImageSource"/>
+    </ContentView.Resources>
+    
+    <CollectionView ItemsSource="{Binding SelectedItem, Source={x:Reference View}, 
+                                  Converter={StaticResource EnumToValuesConverter}, ConverterParameter='Unkown'}"
+                    SelectionMode="Single"
+                    SelectedItem="{Binding SelectedItem, Source={x:Reference View}, Mode=TwoWay}">
+        <CollectionView.ItemsLayout>
+            <GridItemsLayout Orientation="Vertical" Span="3"/>
+        </CollectionView.ItemsLayout>
+        
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Border Padding="10,20" Margin="2">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="50,50,0,50"/>
+                    </Border.StrokeShape>
+                    <components:ImageText Text="{Binding}"
+                                          TextColor="Black"
+                                          ImageSource="{Binding Converter={StaticResource EnumToImageSource}}"
+                                          ImageColor="Black"/>
+                </Border>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentView>

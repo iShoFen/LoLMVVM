@@ -57,7 +57,9 @@
         <Editor Grid.Row="3" Grid.Column="1" Text="{Binding ChampionVm.Bio, Source={x:Reference View}}" FontSize="Large"
                 BackgroundColor="{StaticResource PrimaryVariant}"/>
         
-        <Label Grid.Row="4" Grid.Column="0" Text="Classe :" VerticalOptions="Center"/>
+        <Label Grid.Row="4" Grid.Column="0" Text="Classe : " VerticalOptions="Center"/>
+        <views:ClassEditView Grid.Row="4" Grid.Column="1"
+                             SelectedItem="{Binding ChampionVm.Class, Source={x:Reference View}}"/>
         
         
         <Label Grid.Row="5" Grid.Column="0" Text="Caractéristiques : "/>
