@@ -5,7 +5,7 @@ namespace LoLApp.UI.Pages;
 
 public partial class ChampionsPage : ContentPage
 {
-    private ApplicationVM AppVM { get; set; }
+    public ApplicationVM AppVM { get; set; }
     
     public ChampionsPage(ApplicationVM appVM)
     {

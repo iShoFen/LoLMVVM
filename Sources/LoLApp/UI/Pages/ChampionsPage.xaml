@@ -9,6 +9,7 @@
              xmlns:viewModel="clr-namespace:ViewModel.ChampionVMs;assembly=ViewModel"
              x:DataType="appvm:ApplicationVM"
              x:Class="LoLApp.UI.Pages.ChampionsPage"
+             x:Name="Page"
              Title="Champions">
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior
@@ -63,10 +64,25 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewModel:ChampionVM">
                     <ViewCell>
-                        <components:CustomImageCell
-                            Base64Image="{Binding Icon}"
-                            Title="{Binding Name}"
-                            Subtitle="{Binding Class}"/>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItem Text="Supprimer"
+                                           Command="{Binding AppVM.DeleteChampionCommand, 
+                                                     Source={x:Reference Page}}"
+                                           CommandParameter="{Binding}"
+                                           BackgroundColor="{StaticResource Tertiary}" />
+                                <SwipeItem Text="Modifier"
+                                           Command="{Binding AppVM.EditChampionPageCommand,  
+                                                     Source={x:Reference Page}}"
+                                           CommandParameter="{Binding}"
+                                           BackgroundColor="{StaticResource SecondaryVariant}" />
+                            </SwipeView.RightItems>
+                            
+                            <components:CustomImageCell
+                                Base64Image="{Binding Icon}"
+                                Title="{Binding Name}"
+                                Subtitle="{Binding Class}"/>
+                        </SwipeView>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
