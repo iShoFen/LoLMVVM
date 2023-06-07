@@ -1,10 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              x:Class="LoLApp.UI.Pages.HomePage">
 
     <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Image Source="league_of_legends.png" Margin="40"/>
+        <Image Source="league_of_legends.png" Margin="40">
+            <Image.HeightRequest>
+                <OnPlatform x:TypeArguments="system:Double">
+                    <On Platform="iOS" Value="200"/>
+                    <On Platform="Android" Value="-1"/>
+                </OnPlatform>
+            </Image.HeightRequest>
+        </Image>
         <Label Text="League of Legends Data" 
                FontSize="40" Margin="60,40" 
                HorizontalTextAlignment="Center" />

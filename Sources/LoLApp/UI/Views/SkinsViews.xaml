@@ -10,7 +10,8 @@
     </ContentView.Resources>
     <ListView ItemsSource="{Binding Skins, Source={x:Reference View}}"
               SelectionMode="None"
-              HasUnevenRows="True">
+              HasUnevenRows="True"
+              BackgroundColor="Black">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
@@ -21,7 +22,8 @@
                             <RoundRectangle CornerRadius="0,10,10,10" />
                         </Border.StrokeShape>
                         <HorizontalStackLayout>
-                            <Image Source="{Binding Icon, Converter={StaticResource Base64ToImageSourceConverter}}" HeightRequest="55" />
+                            <Image Source="{Binding Icon, Converter={StaticResource Base64ToImageSourceConverter}}" 
+                                   HeightRequest="55" WidthRequest="55" />
                             <Label Text="{Binding Name}" FontSize="Large" />
                         </HorizontalStackLayout> 
                     </Border>

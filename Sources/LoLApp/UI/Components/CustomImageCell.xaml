@@ -15,7 +15,8 @@
             </Grid.ColumnDefinitions>
         
             <Image Source="{Binding Base64Image, Source={x:Reference View}, 
-                                         Converter={StaticResource Base64ToImageSourceConverter}}" />
+                                         Converter={StaticResource Base64ToImageSourceConverter}}"
+                   HeightRequest="40" WidthRequest="40"/>
             
             <StackLayout Grid.Column="1" Orientation="Vertical">
                 <Label Text="{Binding Title, Source={x:Reference View}}" />

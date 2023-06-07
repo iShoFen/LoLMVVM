@@ -6,8 +6,8 @@
              x:Name="View">
     <ListView ItemsSource="{Binding Skills, Source={x:Reference View}}"
               SelectionMode="None"
-              InputTransparent="True"
-              HasUnevenRows="True">
+              HasUnevenRows="True"
+              BackgroundColor="Black">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>

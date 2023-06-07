@@ -7,7 +7,8 @@
              xmlns:appvm="clr-namespace:LoLApp.ViewModel"
              x:DataType="appvm:ApplicationVM"
              x:Class="LoLApp.UI.Pages.ChampionDetailPage"
-             Title="ChampionPage">
+             Title="ChampionPage"
+             BackgroundColor="Black">
     <ContentPage.Resources>
         <Style TargetType="Label" BaseResourceKey="BaseLabelStyle">
             <Setter Property="TextColor" Value="{StaticResource Primary}" />
@@ -37,7 +38,6 @@
                     Command="{Binding EditChampionPageCommand}"/>
         </AbsoluteLayout>
     </Shell.TitleView>
-    
     <ScrollView>
         <VerticalStackLayout Background="Black">
             
@@ -51,8 +51,7 @@
         
             <Label Text="Caractéristiques" FontSize="30" />
             
-            <views:CharacteristicsView Characteristics="{Binding SelectedChampion.Characteristics}"
-                                       Margin="10"/>
+            <views:CharacteristicsView Characteristics="{Binding SelectedChampion.Characteristics}"/>
             
             <Label Text="Compétences" FontSize="30" />
             
