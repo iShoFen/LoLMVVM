@@ -35,6 +35,8 @@ public class ApplicationVM: ObservableObject
     
     public ICommand EditChampionPageCommand { get; }
     
+    public ICommand DeleteChampionCommand { get; }
+    
     public ICommand FilePickerCommand { get; }
         
     public ICommand AddCharacteristicCommand { get; }
@@ -54,7 +56,8 @@ public class ApplicationVM: ObservableObject
         DetailPageCommand = new Command<ChampionVM>(OnDetailPageCommand);
         
         AddChampionPageCommand = new Command(OnAddChampionPageCommand);
-        EditChampionPageCommand = new Command(OnEditChampionPageCommand);
+        EditChampionPageCommand = new Command<ChampionVM?>(OnEditChampionPageCommand);
+        DeleteChampionCommand = new Command<ChampionVM>(OnDeleteChampionCommand);
         
         FilePickerCommand = new Command<string>(OnFilePickerCommand);
         AddCharacteristicCommand = new Command<KeyValuePair<string, int>>(OnAddCharacteristicCommand);
@@ -63,7 +66,6 @@ public class ApplicationVM: ObservableObject
         CancelCommand = new Command(OnCancelCommand);
         BackCommand = new Command(OnBackCommand);
     }
-
     
     private async void OnDetailPageCommand(ChampionVM championVm)
     {
@@ -77,12 +79,17 @@ public class ApplicationVM: ObservableObject
         await navigation.PushModalAsync(new AddChampionPage(this));
     }
     
-    private async void OnEditChampionPageCommand()
+    private async void OnEditChampionPageCommand(ChampionVM? championVm)
     {
+        if (championVm is not null) SelectedChampion = championVm;
+        
         EditableChampion = new EditableChampionVM(SelectedChampion!);
         await navigation.PushModalAsync(new AddChampionPage(this));
     }
     
+    private async void OnDeleteChampionCommand(ChampionVM championVm) 
+        => await MgrVm.RemoveChampion(championVm);
+
     private async void OnFilePickerCommand(string propertyName)
     {
         try

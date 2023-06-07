@@ -100,7 +100,10 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
     public async Task<bool> AddChampion(ChampionVM champion)
     {
         var result = await Model.ChampionsMgr.AddItem(champion.Model) != null;
-        if (result) await Update();
+        if (!result) return result;
+        
+        await Update();
+        OnPropertyChanged(nameof(Page));
 
         return result;
     }
@@ -118,6 +121,7 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
         if (!await Model.ChampionsMgr.DeleteItem(champion.Model)) return false;
 
         await Update();
+        OnPropertyChanged(nameof(Page));
 
         return true;
     }
