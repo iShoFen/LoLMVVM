@@ -48,7 +48,6 @@
                          Command="{Binding FilePickerCommand, Source={x:Reference View}}"
                             CommandParameter="Icon"
                          HeightRequest="50" WidthRequest="50" Aspect="AspectFit"/>
-     
         </Frame>
         
         <Label Grid.Row="2" Grid.Column="0" Text="Image :" VerticalOptions="Center"/>
@@ -57,7 +56,7 @@
                                   Converter={StaticResource Base64ToImageSourceConverter}, ConverterParameter='league_of_legends.png'}"
                          Command="{Binding FilePickerCommand, Source={x:Reference View}}"
                          CommandParameter="Image"
-                         WidthRequest="-1" HeightRequest="-1" Aspect="AspectFit"/>
+                         WidthRequest="-1" HeightRequest="200" Aspect="AspectFit"/>
         </Frame>
         
         <Label Grid.Row="3" Grid.Column="0" Text="Bio :" VerticalOptions="Center"/>
