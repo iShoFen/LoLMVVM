@@ -41,21 +41,14 @@
     <ScrollView>
         <VerticalStackLayout Background="Black">
             
-            <views:ChampionDetailSummaryView
-                Base64Image="{Binding SelectedChampion.Image, FallbackValue='league_of_legends.png'}"
-                Name="{Binding SelectedChampion.Name, FallbackValue='Name' }"
-                Class="{Binding SelectedChampion.Class, FallbackValue='Class'}"
-                ClassImage="{Binding SelectedChampion.ClassImage, FallbackValue='lol_icon.png'}"
-                ClassColor="{StaticResource  Primary}"
-                Bio="{Binding SelectedChampion.Bio, FallbackValue='Bio'}"/>
+            <views:ChampionDetailSummaryView/>
         
             <Label Text="Caractéristiques" FontSize="30" />
-            
-            <views:CharacteristicsView Characteristics="{Binding SelectedChampion.Characteristics}"/>
+            <views:CharacteristicsView Characteristics="{Binding MgrVM.SelectedChampion.Characteristics}"
+                                       Margin="10"/>
             
             <Label Text="Compétences" FontSize="30" />
-            
-            <views:SkillsView Skills="{Binding SelectedChampion.Skills}"
+            <views:SkillsView Skills="{Binding MgrVM.SelectedChampion.Skills}"
                                 Margin="10"/>
             
             <Grid>
@@ -68,7 +61,7 @@
                 <components:PlusButton Grid.Column="1" />
             </Grid>
             
-            <views:SkinsViews Skins="{Binding SelectedChampion.Skins}"/>
+            <views:SkinsViews Skins="{Binding MgrVM.SelectedChampion.Skins}"/>
         </VerticalStackLayout>
     </ScrollView>
     

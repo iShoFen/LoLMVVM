@@ -14,7 +14,7 @@
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior
             EventName="Loaded"
-            Command="{Binding MgrVm.LoadChampionsCommand}" />
+            Command="{Binding MgrVM.LoadChampionsCommand}" />
     </ContentPage.Behaviors>
     
     <ContentPage.Resources>
@@ -46,14 +46,14 @@
         </Grid.RowDefinitions>
         <HorizontalStackLayout>
             <Label Text="Chercher par nom"/>
-            <Label Text="{Binding MgrVm.IsOrderedDescending, Converter={StaticResource BoolToObjectConverter}}">
+            <Label Text="{Binding MgrVM.IsOrderedDescending, Converter={StaticResource BoolToObjectConverter}}">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding MgrVm.SortChampionCommand}"/>
+                    <TapGestureRecognizer Command="{Binding MgrVM.SortChampionCommand}"/>
                 </Label.GestureRecognizers>
             </Label>
         </HorizontalStackLayout>
         
-        <ListView Grid.Row="1" ItemsSource="{Binding MgrVm.Champions}"
+        <ListView Grid.Row="1" ItemsSource="{Binding MgrVM.Champions}"
                   SelectionMode="None">
             <ListView.Behaviors>
                 <toolkit:EventToCommandBehavior
@@ -89,16 +89,16 @@
         </ListView>
 
         <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="2" Spacing="10">
-            <Button Text="&lt;" Command="{Binding MgrVm.PreviousPageCommand}" />
+            <Button Text="&lt;" Command="{Binding MgrVM.PreviousPageCommand}" />
             <Label VerticalTextAlignment="Center">
                 <Label.Text>
                     <MultiBinding StringFormat="{} {0} / {1}">
-                        <Binding Path="MgrVm.Index"/>
-                        <Binding Path="MgrVm.Page"/>
+                        <Binding Path="MgrVM.Index"/>
+                        <Binding Path="MgrVM.Page"/>
                     </MultiBinding>
                 </Label.Text>
             </Label>
-            <Button Text="&gt;" Command="{Binding MgrVm.NextPageCommand}" />
+            <Button Text="&gt;" Command="{Binding MgrVM.NextPageCommand}" />
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>

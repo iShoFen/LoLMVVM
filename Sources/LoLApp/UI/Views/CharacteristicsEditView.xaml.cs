@@ -26,16 +26,17 @@ public partial class CharacteristicsEditView : ContentView
         get => (string) GetValue(KeyProperty);
         set => SetValue(KeyProperty, value);
     }
-    private static readonly BindableProperty KeyProperty =
-        BindableProperty.Create(nameof(Key), typeof(string), typeof(CharacteristicsEditView));
+
+    public static readonly BindableProperty KeyProperty =
+        BindableProperty.Create(nameof(Key), typeof(string), typeof(CharacteristicsEditView), string.Empty, BindingMode.TwoWay);
 
     public int Value
     {
         get => (int) GetValue(ValueProperty);
         set => SetValue(ValueProperty, value);
     }
-    private static readonly BindableProperty ValueProperty =
-        BindableProperty.Create(nameof(Value), typeof(int), typeof(CharacteristicsEditView));
+    public static readonly BindableProperty ValueProperty =
+        BindableProperty.Create(nameof(Value), typeof(int), typeof(CharacteristicsEditView), 0, BindingMode.TwoWay);
 
     public CharacteristicsEditView()
     {

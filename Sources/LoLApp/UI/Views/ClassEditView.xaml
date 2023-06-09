@@ -34,7 +34,7 @@
     </ContentView.Resources>
     
     <CollectionView ItemsSource="{Binding SelectedItem, Source={x:Reference View}, 
-                                  Converter={StaticResource EnumToValuesConverter}, ConverterParameter='Unkown'}"
+                                  Converter={StaticResource EnumToValuesConverter}, ConverterParameter='Unknown'}"
                     SelectionMode="Single"
                     SelectedItem="{Binding SelectedItem, Source={x:Reference View}, Mode=TwoWay}">
         <CollectionView.ItemsLayout>
