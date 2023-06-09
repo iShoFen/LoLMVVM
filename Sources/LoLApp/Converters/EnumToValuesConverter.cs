@@ -11,8 +11,14 @@ public class EnumToValuesConverter<TEnum> : IValueConverter
         if (parameter is not string excluded) return result;
         
         var names = excluded.Split(',');
-        var excludedValues = names.Select(name => Enum.TryParse(name, out TEnum enumValue) ? enumValue : default)
-                                 .Distinct();
+        var excludedValues = names
+                             .Select(name => Enum.TryParse(name, out TEnum enumValue)
+                                         ? (true, enumValue)
+                                         : (false, default)
+                             )
+                             .Where(tuple => tuple.Item1)
+                             .Select(tuple => tuple.Item2)
+                             .Distinct();
             
         result = result.Except(excludedValues);
 
