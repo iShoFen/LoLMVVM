@@ -2,6 +2,7 @@
 using Model;
 using MVVMToolkit;
 using ViewModel.Enums;
+using ViewModel.Mappers;
 using ViewModel.SkinVms;
 
 namespace ViewModel.ChampionVMs;
@@ -103,7 +104,7 @@ public class EditableChampionVM: ObservableObject
     }
 }
 
-public static class EditableChampionVMExtention
+public static class EditableChampionVMExtension
 {
     public static ChampionVM ToChampionVM(this EditableChampionVM vm)
     {
@@ -111,7 +112,7 @@ public static class EditableChampionVMExtention
         model.AddCharacteristics(vm.Characteristics.Select(pair => Tuple.Create(pair.Key, pair.Value)).ToArray());
         foreach (var vmSkill in vm.Skills)
         {
-            model.AddSkill(new Skill(vmSkill.Name, vmSkill.Type, vmSkill.Description));
+            model.AddSkill(new Skill(vmSkill.Name, vmSkill.Type.ToModel(), vmSkill.Description));
         }
 
         foreach (var vmSkin in vm.Skins)

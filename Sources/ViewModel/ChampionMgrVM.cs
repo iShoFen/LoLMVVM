@@ -14,7 +14,7 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
     public ReadOnlyObservableCollection<ChampionVM> Champions { get; }
     private readonly ObservableCollection<ChampionVM> champions = new();
 
-    public int Page => (int) MathF.Ceiling((float) Model.ChampionsMgr.GetNbItems().Result / Count);
+    public int Page => GetPageCount().Result;
 
     public int Index
     {
@@ -39,6 +39,13 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
     }
 
     private bool isOrderedDescending;
+    
+    public ChampionVM? SelectedChampion
+    {
+        get => selectedChampion;
+        set => SetProperty(ref selectedChampion, value);
+    }
+    private ChampionVM? selectedChampion;
     
     public ICommand LoadChampionsCommand { get; }
 
@@ -96,6 +103,13 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
         Index = index + 1;
         await Update();
     }
+    
+    private async Task<int> GetPageCount()
+    {
+        var nbPage = (int) MathF.Ceiling((float) await Model.ChampionsMgr.GetNbItems() / Count);
+        
+        return nbPage > 0 ? nbPage : 1;
+    }
 
     public async Task<bool> AddChampion(ChampionVM champion)
     {
@@ -108,9 +122,9 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
         return result;
     }
     
-    public async Task<bool> UpdateChampion(ChampionVM oldChampion, ChampionVM newChampion)
+    public async Task<bool> UpdateChampion(ChampionVM newChampion)
     {
-        var result = await Model.ChampionsMgr.UpdateItem(oldChampion.Model, newChampion.Model) != null;
+        var result = await Model.ChampionsMgr.UpdateItem(SelectedChampion!.Model, newChampion.Model) != null;
         if (result) await Update();
 
         return result;
