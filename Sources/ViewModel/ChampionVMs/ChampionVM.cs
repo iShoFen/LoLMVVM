@@ -2,6 +2,7 @@
 using Model;
 using MVVMToolkit;
 using ViewModel.Enums;
+using ViewModel.Mappers;
 using ViewModel.SkinVms;
 
 namespace ViewModel.ChampionVMs;
@@ -32,8 +33,8 @@ public class ChampionVM: ObservableObject<Champion>
     
     public ChampionClassVM Class
     {
-        get => (ChampionClassVM) Model.Class;
-        private set => SetProperty(Model.Class, (ChampionClass) value, Model, (model, value) => model.Class = value);
+        get => Model.Class.ToVM();
+        private set => SetProperty(Model.Class,  value.ToModel(), Model, (model, value) => model.Class = value);
     }
     
     public string ClassImage => Class.GetImage();

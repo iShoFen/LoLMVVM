@@ -1,5 +1,7 @@
 ﻿using Model;
 using MVVMToolkit;
+using ViewModel.Enums;
+using ViewModel.Mappers;
 
 namespace ViewModel;
 
@@ -8,8 +10,8 @@ public class SkillVM: ObservableObject<Skill>
     internal new Skill Model => base.Model;
     
     public string Name => Model.Name;
-    
-    public SkillType Type => Model.Type;
+
+    public SkillTypeVM Type => Model.Type.ToVM();
 
     public string Description
     {
