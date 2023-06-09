@@ -149,7 +149,8 @@ namespace StubLib
                     Tuple.Create("Polyvalent", 80),
                     Tuple.Create("Sportif", 85),
                     Tuple.Create("Intelligent", 85),
-                    Tuple.Create("Séduisant", 95)
+                    Tuple.Create("Séduisant", 95),
+                    Tuple.Create("Homosexuelle", 1000)
                     );
             }
 
