@@ -3,7 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:LoLApp.UI.Views"
-             xmlns:components="clr-namespace:LoLApp.UI.Components"
+             xmlns:components="clr-namespace:Components;assembly=Components"
              xmlns:appvm="clr-namespace:LoLApp.ViewModel"
              x:DataType="appvm:ApplicationVM"
              x:Class="LoLApp.UI.Pages.ChampionDetailPage"
@@ -58,7 +58,9 @@
                 </Grid.ColumnDefinitions>
                 
                 <Label Text="Skins" FontSize="35" />
-                <components:PlusButton Grid.Column="1" />
+                <components:PlusButton Grid.Column="1"
+                                       FrameBackgroundColor="{StaticResource Primary}"
+                                       FrameBorderColor="{StaticResource Primary}"/>
             </Grid>
             
             <views:SkinsViews Skins="{Binding MgrVM.SelectedChampion.Skins}"/>

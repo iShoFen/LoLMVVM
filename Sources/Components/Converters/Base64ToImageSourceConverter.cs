@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using CommunityToolkit.Maui.Converters;
 
-namespace LoLApp.Converters;
+namespace Components.Converters;
 
 public class Base64ToImageSourceConverter: ByteArrayToImageSourceConverter, IValueConverter
 {

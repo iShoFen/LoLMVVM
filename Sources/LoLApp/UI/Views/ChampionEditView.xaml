@@ -3,9 +3,9 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:components="clr-namespace:LoLApp.UI.Components"
+             xmlns:components="clr-namespace:Components;assembly=Components"
              xmlns:views="clr-namespace:LoLApp.UI.Views"
-             xmlns:converters="clr-namespace:LoLApp.Converters"
+             xmlns:converters="clr-namespace:Components.Converters;assembly=Components"
              xmlns:viewmodel="clr-namespace:LoLApp.ViewModel"
              x:DataType="viewmodel:EditApplicationChampionVM"
              x:Class="LoLApp.UI.Views.ChampionEditView">

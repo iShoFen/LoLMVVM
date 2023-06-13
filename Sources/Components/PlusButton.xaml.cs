@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace LoLApp.UI.Components;
+namespace Components;
 
 public partial class PlusButton : ContentView
 {
@@ -11,6 +11,22 @@ public partial class PlusButton : ContentView
     }
     public static readonly BindableProperty ColorProperty = 
         BindableProperty.Create(nameof(Color), typeof(Color), typeof(PlusButton), Colors.Black);
+    
+    public Color FrameBackgroundColor
+    {
+        get => (Color)GetValue(FrameBackgroundColorProperty);
+        set => SetValue(FrameBackgroundColorProperty, value);
+    }
+    public static readonly BindableProperty FrameBackgroundColorProperty = 
+        BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(PlusButton), Colors.White);
+
+    public Color FrameBorderColor
+    {
+        get => (Color)GetValue(FrameBorderColorProperty);
+        set => SetValue(FrameBorderColorProperty, value);
+    }
+    public static readonly BindableProperty FrameBorderColorProperty = 
+        BindableProperty.Create(nameof(FrameBorderColor), typeof(Color), typeof(PlusButton), Colors.Black);
     
     public ICommand Command
     {

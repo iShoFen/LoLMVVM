@@ -2,7 +2,7 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:components="clr-namespace:LoLApp.UI.Components"
+             xmlns:components="clr-namespace:Components;assembly=Components"
              x:Class="LoLApp.UI.Views.CharacteristicsEditView"
              x:Name="View">
     

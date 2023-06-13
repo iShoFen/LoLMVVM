@@ -1,8 +1,7 @@
 ﻿#nullable enable
 using System.Globalization;
 
-namespace LoLApp.Converters;
-
+namespace Components.Converters;
 
 public class IsNullToObjectConverter : IsNullToObjectConverter<object> { }
 

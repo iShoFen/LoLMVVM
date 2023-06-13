@@ -3,8 +3,8 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
-             xmlns:converters="clr-namespace:LoLApp.Converters"
-             xmlns:components="clr-namespace:LoLApp.UI.Components"
+             xmlns:converters="clr-namespace:Components.Converters;assembly=Components"
+             xmlns:components="clr-namespace:Components;assembly=Components"
              xmlns:champion="clr-namespace:ViewModel.ChampionVMs;assembly=ViewModel"
              x:DataType="champion:ChampionVM"
              x:Class="LoLApp.UI.Views.ChampionDetailSummaryView">
