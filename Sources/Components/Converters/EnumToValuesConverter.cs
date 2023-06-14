@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace LoLApp.Converters;
+namespace Components.Converters;
 
 public class EnumToValuesConverter<TEnum> : IValueConverter
     where TEnum : struct, Enum

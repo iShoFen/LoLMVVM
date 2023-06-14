@@ -2,15 +2,9 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:converters="clr-namespace:LoLApp.Converters"
-             xmlns:components="clr-namespace:LoLApp.UI.Components"
-             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:components="clr-namespace:Components;assembly=Components"
              x:Class="LoLApp.UI.Views.CharacteristicsEditView"
              x:Name="View">
-    
-    <ContentView.Resources>
-        <converters:ObjectsToKVP x:TypeArguments="system:String, system:Int32" x:Key="ObjectsToKvp"/>
-    </ContentView.Resources>
     
     <VerticalStackLayout>
         <Frame BackgroundColor="{StaticResource Black}">
@@ -69,12 +63,6 @@
             
             <components:PlusButton Grid.Column="2" Padding="-10"
                                    Command="{Binding AddCommand, Source={x:Reference View}}">
-                <components:PlusButton.CommandParameter>
-                    <MultiBinding Converter="{StaticResource ObjectsToKvp}">
-                        <Binding Path="Key" Source="{x:Reference View}"/>
-                        <Binding Path="Value" Source="{x:Reference View}"/>
-                    </MultiBinding>
-                </components:PlusButton.CommandParameter>
             </components:PlusButton>
         </Grid>
     </VerticalStackLayout>

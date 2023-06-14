@@ -1,11 +1,21 @@
-﻿using Microsoft.Maui.Platform;
+﻿using LoLApp.ViewModel;
+using Microsoft.Maui.Platform;
+using ViewModel;
 
 namespace LoLApp;
 
 public partial class App : Application
 {
-	public App()
+	public ApplicationVM AppVM { get; }
+	public ChampionMgrVM MgrVM { get; }
+	public EditApplicationChampionVM EditAppChampionVM { get; }
+	
+	public App(ApplicationVM appVM, ChampionMgrVM mgrVM, EditApplicationChampionVM editAppChampionVM)
 	{
+		MgrVM = mgrVM;
+		AppVM = appVM;
+		EditAppChampionVM = editAppChampionVM;
+		
 		InitializeComponent();
 		InitStyleHandlers();
 

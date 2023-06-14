@@ -24,8 +24,9 @@ public static class MauiProgram
 			.Services
 			.AddSingleton<IDataManager, StubData>()
 			.AddSingleton<ChampionMgrVM>()
+			.AddSingleton<EditApplicationChampionVM>()
 			.AddSingleton<ApplicationVM>()
-			.AddScoped<ChampionsPage>();
+			.AddSingleton<App>();
 
 #if DEBUG
 		builder.Logging.AddDebug();

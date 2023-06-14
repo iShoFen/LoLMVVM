@@ -1,4 +1,4 @@
-﻿namespace LoLApp.UI.Components;
+﻿namespace Components;
 
 public partial class ImageText : ContentView
 {

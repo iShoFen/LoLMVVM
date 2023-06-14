@@ -14,12 +14,12 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
     public ReadOnlyObservableCollection<ChampionVM> Champions { get; }
     private readonly ObservableCollection<ChampionVM> champions = new();
 
-    public int Page => (int) MathF.Ceiling((float) Model.ChampionsMgr.GetNbItems().Result / Count);
+    public int Page => GetPageCount().Result;
 
     public int Index
     {
         get => index + 1;
-        set => SetProperty(ref index, value);
+        set => SetProperty(ref index, value - 1);
     }
 
     private int index;
@@ -39,6 +39,13 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
     }
 
     private bool isOrderedDescending;
+    
+    public ChampionVM? SelectedChampion
+    {
+        get => selectedChampion;
+        set => SetProperty(ref selectedChampion, value);
+    }
+    private ChampionVM? selectedChampion;
     
     public ICommand LoadChampionsCommand { get; }
 
@@ -61,6 +68,7 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
 
     private async Task Update()
     {
+        if (Index > Page) Index = Page;
         await LoadChampions();
         (PreviousPageCommand as Command)?.ChangeCanExecute();
         (NextPageCommand as Command)?.ChangeCanExecute();
@@ -87,14 +95,21 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
 
     private async void PreviousPage()
     {
-        Index = index - 1;
+        Index -= 1;
         await Update();
     }
 
     private async void NextPage()
     {
-        Index = index + 1;
+        Index += 1;
         await Update();
+    }
+    
+    private async Task<int> GetPageCount()
+    {
+        var nbPage = (int) MathF.Ceiling((float) await Model.ChampionsMgr.GetNbItems() / Count);
+        
+        return nbPage > 0 ? nbPage : 1;
     }
 
     public async Task<bool> AddChampion(ChampionVM champion)
@@ -108,9 +123,9 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
         return result;
     }
     
-    public async Task<bool> UpdateChampion(ChampionVM oldChampion, ChampionVM newChampion)
+    public async Task<bool> UpdateChampion(ChampionVM newChampion)
     {
-        var result = await Model.ChampionsMgr.UpdateItem(oldChampion.Model, newChampion.Model) != null;
+        var result = await Model.ChampionsMgr.UpdateItem(SelectedChampion!.Model, newChampion.Model) != null;
         if (result) await Update();
 
         return result;
@@ -120,8 +135,8 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
     {
         if (!await Model.ChampionsMgr.DeleteItem(champion.Model)) return false;
 
-        await Update();
         OnPropertyChanged(nameof(Page));
+        await Update();
 
         return true;
     }
