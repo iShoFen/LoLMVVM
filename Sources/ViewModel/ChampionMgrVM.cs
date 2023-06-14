@@ -19,7 +19,7 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
     public int Index
     {
         get => index + 1;
-        set => SetProperty(ref index, value);
+        set => SetProperty(ref index, value - 1);
     }
 
     private int index;
@@ -68,6 +68,7 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
 
     private async Task Update()
     {
+        if (Index > Page) Index = Page;
         await LoadChampions();
         (PreviousPageCommand as Command)?.ChangeCanExecute();
         (NextPageCommand as Command)?.ChangeCanExecute();
@@ -94,13 +95,13 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
 
     private async void PreviousPage()
     {
-        Index = index - 1;
+        Index -= 1;
         await Update();
     }
 
     private async void NextPage()
     {
-        Index = index + 1;
+        Index += 1;
         await Update();
     }
     
@@ -134,8 +135,8 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
     {
         if (!await Model.ChampionsMgr.DeleteItem(champion.Model)) return false;
 
-        await Update();
         OnPropertyChanged(nameof(Page));
+        await Update();
 
         return true;
     }

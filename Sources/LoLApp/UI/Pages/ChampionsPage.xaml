@@ -25,7 +25,7 @@
     </ContentPage.Resources>
     
     <Shell.TitleView>
-        <AbsoluteLayout>
+        <AbsoluteLayout Margin="{OnPlatform iOS='0,20,0,0'}">
             <Label Text="{Binding Title, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
                    FontAttributes="Bold" FontSize="Medium" TextColor="White"
                    AbsoluteLayout.LayoutFlags="PositionProportional"
