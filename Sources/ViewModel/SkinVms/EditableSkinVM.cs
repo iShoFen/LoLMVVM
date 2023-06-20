@@ -1,9 +1,13 @@
-﻿using MVVMToolkit;
+﻿using Model;
+using MVVMToolkit;
+using ViewModel.ChampionVMs;
 
 namespace ViewModel.SkinVms;
 
 public class EditableSkinVM: ObservableObject
 {
+    internal SkinVM? Model { get; }
+
     public string? Name
     {
         get => name;
@@ -43,10 +47,31 @@ public class EditableSkinVM: ObservableObject
     
     public EditableSkinVM(SkinVM model)
     {
-        name = model.Name;
-        description = model.Description;
-        icon = model.Icon;
-        image = model.Image;
-        price = model.Price;
+        Model = model;
+        name = Model.Name;
+        description = Model.Description;
+        icon = Model.Icon;
+        image = Model.Image;
+        price = Model.Price;
     }
+}
+
+public static class EditableSKinVMExtension
+{
+    public static SkinVM ToSkinVM(this EditableSkinVM vm, ChampionVM champion)
+    {
+        if (vm.Model != null)
+        {
+            vm.Model.Description = vm.Description ?? "";
+            vm.Model.Icon = vm.Icon ?? "";
+            vm.Model.Image = vm.Image ?? "";
+            vm.Model.Price = vm.Price ?? 0F;
+            
+            return vm.Model;
+        }
+        
+        var model = new Skin(vm.Name ?? "", champion.Model, vm.Price ?? 0F, vm.Icon ?? "", vm.Image ?? "", vm.Description ?? "");
+        return new SkinVM(model, champion);
+    }
+
 }
