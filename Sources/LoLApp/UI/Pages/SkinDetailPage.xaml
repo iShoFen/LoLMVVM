@@ -2,11 +2,30 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LoLApp.UI.Pages.SkinDetailPage">
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:converters="clr-namespace:Components.Converters;assembly=Components"
+             xmlns:viewmodels="clr-namespace:LoLApp.ViewModel"
+             x:DataType="viewmodels:ApplicationVM"
+             x:Class="LoLApp.UI.Pages.SkinDetailPage"
+             Title="SkinPage"
+             BackgroundColor="Black">
+    
+    <ContentPage.Resources>
+        <converters:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter"/>
+            <Style TargetType="Label" BaseResourceKey="BaseLabelStyle">
+                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                <Setter Property="Margin" Value="10" />
+            </Style>
+    </ContentPage.Resources>
+    
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
     
     <Shell.TitleView>
         <AbsoluteLayout Margin="{OnPlatform iOS='0,20,0,0'}">
-            <Button Text="&lt; Back" FontSize="Medium"
+            <Button Text="&lt; SkinPage" FontSize="Medium"
                     AbsoluteLayout.LayoutFlags="PositionProportional"
                     AbsoluteLayout.LayoutBounds="0, 0.5, -1, -1"
                     Command="{Binding BackCommand}"/>
@@ -19,7 +38,38 @@
             <Button Text="Modifier" FontSize="Medium"
                     AbsoluteLayout.LayoutFlags="PositionProportional"
                     AbsoluteLayout.LayoutBounds="1, 0.5, -1, -1"
-                    Command="{Binding EditChampionPageCommand}"/>
+                    Command="{Binding EditSkinPageCommand}"/>
         </AbsoluteLayout>
     </Shell.TitleView>
+    
+    <VerticalStackLayout>
+        <Image Source="{Binding MgrVM.SelectedSkin.Image, 
+                    Converter={StaticResource Base64ToImageSourceConverter}}"
+               Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Start">
+            <Image.HeightRequest>
+                <OnPlatform x:TypeArguments="system:Double">
+                    <On Platform="iOS" Value="300"/>
+                    <On Platform="Android" Value="-1"/>
+                </OnPlatform>
+            </Image.HeightRequest>
+            <Image.WidthRequest>
+                <OnPlatform x:TypeArguments="system:Double">
+                    <On Platform="iOS" Value="500"/>
+                    <On Platform="Android" Value="-1"/>
+                </OnPlatform>
+            </Image.WidthRequest>
+        </Image>
+        
+        <HorizontalStackLayout>
+            <Label Text="{Binding MgrVM.SelectedSkin.Name}" FontSize="30"/>
+            <Image Source="rp_icon.png" WidthRequest="20" HeightRequest="20">
+                <Image.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{StaticResource PrimarySecondVariant}"/>
+                </Image.Behaviors>
+            </Image>
+            <Label Text="{Binding MgrVM.SelectedSkin.Price}" FontSize="Body" VerticalTextAlignment="Center"/>
+        </HorizontalStackLayout>
+        
+        <Label Text="{Binding MgrVM.SelectedSkin.Description}" FontSize="Body"/>
+    </VerticalStackLayout>
 </ContentPage>

@@ -2,16 +2,24 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:converters="clr-namespace:Components.Converters;assembly=Components"
              x:Class="LoLApp.UI.Views.SkinsViews"
              x:Name="View">
     <ContentView.Resources>
         <converters:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter"/>
+        <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter"/>
     </ContentView.Resources>
-    <ListView ItemsSource="{Binding Skins, Source={x:Reference View}}"
+    <ListView ItemsSource="{Binding AppVM.MgrVM.SelectedChampion.Skins, Source={x:Reference View}}"
               SelectionMode="None"
               HasUnevenRows="True"
               BackgroundColor="Black">
+        <ListView.Behaviors>
+            <toolkit:EventToCommandBehavior
+                EventName="ItemTapped"
+                Command="{Binding AppVM.DetailSkinPageCommand, Source={x:Reference View}}"
+                EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}"/>
+        </ListView.Behaviors>
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
@@ -21,11 +29,27 @@
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="0,10,10,10" />
                         </Border.StrokeShape>
-                        <HorizontalStackLayout>
-                            <Image Source="{Binding Icon, Converter={StaticResource Base64ToImageSourceConverter}}" 
-                                   HeightRequest="55" WidthRequest="55" />
-                            <Label Text="{Binding Name}" FontSize="Large" />
-                        </HorizontalStackLayout> 
+                        
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItem Text="Supprimer"
+                                           Command="{Binding AppVM.DeleteSkinCommand,
+                                                     Source={x:Reference View}}"
+                                           CommandParameter="{Binding}"
+                                           BackgroundColor="{StaticResource Tertiary}" />
+                                <SwipeItem Text="Modifier"
+                                           Command="{Binding AppVM.EditSkinPageCommand,
+                                                     Source={x:Reference View}}"
+                                           CommandParameter="{Binding}"
+                                           BackgroundColor="{StaticResource SecondaryVariant}" />
+                            </SwipeView.RightItems>
+                            
+                            <HorizontalStackLayout>
+                                <Image Source="{Binding Icon, Converter={StaticResource Base64ToImageSourceConverter}}" 
+                                       HeightRequest="55" WidthRequest="55" />
+                                <Label Text="{Binding Name}" FontSize="Large" />
+                            </HorizontalStackLayout> 
+                        </SwipeView>
                     </Border>
                 </ViewCell>
             </DataTemplate>

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:components="clr-namespace:Components;assembly=Components"
+             xmlns:views="clr-namespace:LoLApp.UI.Views"
+             xmlns:converters="clr-namespace:Components.Converters;assembly=Components"
+             x:Class="LoLApp.UI.Views.SkinEditView"
+             x:Name="View">
+    
+    <ContentView.Resources>
+        <converters:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter" />
+        <Style TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryVariant}"/>
+            <Setter Property="BorderColor" Value="{StaticResource PrimaryVariant}"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="CornerRadius" Value="0"/>
+        </Style>
+        
+        <toolkit:IsNullConverter x:Key="IsNullConverter"/>
+    </ContentView.Resources>
+    
+    <Grid Margin="10" RowSpacing="20" ColumnSpacing="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="300"/>
+        </Grid.RowDefinitions>
+        
+        <Label Grid.Row="0" Grid.Column="0" Text="Nom :" VerticalOptions="Center"/>
+        <components:RoundEntry Grid.Row="0" Grid.Column="1"
+                               Text="{Binding EditAppSkinVM.EditableSkin.Name, Source={x:Reference View}, FallbackValue=''}"
+                               Placeholder="Nom du skin"
+                               IsEnabled="{Binding EditAppSkinVM.MgrVM.SelectedSkin, Source={x:Reference View}, Converter={StaticResource IsNullConverter}}" />
+        
+        <Label Grid.Row="1" Grid.Column="0" Text="Icone : " VerticalOptions="Center"/>
+        <Frame Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" HeightRequest="50" WidthRequest="50">
+            <ImageButton Source="{Binding EditAppSkinVM.EditableSkin.Icon, Source={x:Reference View}, FallbackValue='lol_icon.png', 
+                                  Converter={StaticResource Base64ToImageSourceConverter}, ConverterParameter='lol_icon.png'}"
+                         Command="{Binding EditAppSkinVM.FilePickerCommand, Source={x:Reference View}}" 
+                         CommandParameter="Icon"
+                         HeightRequest="50" WidthRequest="50" Aspect="AspectFit"/>
+        </Frame>
+        
+        <Label Grid.Row="2" Grid.Column="0" Text="Image :" VerticalOptions="Center"/>
+        <Frame Grid.Row="2" Grid.Column="1">
+            <ImageButton Source="{Binding EditAppSkinVM.EditableSkin.Image, Source={x:Reference View}, FallbackValue='league_of_legends.png',
+                                  Converter={StaticResource Base64ToImageSourceConverter}, ConverterParameter='league_of_legends.png'}"
+                         Command="{Binding EditAppSkinVM.FilePickerCommand, Source={x:Reference View}}"
+                         CommandParameter="Image"
+                         WidthRequest="-1" HeightRequest="200" Aspect="AspectFit"/>
+        </Frame>
+        
+        <HorizontalStackLayout Grid.Row="3" Grid.Column="0">
+            <Label Text="Prix :" VerticalOptions="Center"/>
+            <Image Source="rp_icon.png" HeightRequest="20" WidthRequest="20">
+                <Image.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{StaticResource PrimarySecondVariant}"/>
+                </Image.Behaviors>
+            </Image>
+        </HorizontalStackLayout>
+        <components:RoundEntry Grid.Row="3" Grid.Column="1"
+                               Text="{Binding EditAppSkinVM.EditableSkin.Price, Source={x:Reference View}}"
+                               Keyboard="Numeric"
+                               Placeholder="0"/>
+        
+        <Label Grid.Row="4" Grid.Column="0" Text="Description :" VerticalOptions="Center"/>
+        <Editor Grid.Row="4" Grid.Column="1" Text="{Binding EditAppSkinVM.EditableSkin.Description, Source={x:Reference View},
+                                                    FallbackValue=''}"
+                FontSize="Large" BackgroundColor="{StaticResource PrimaryVariant}"/>
+    </Grid>
+    
+</ContentView>

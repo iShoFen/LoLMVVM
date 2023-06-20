@@ -6,6 +6,7 @@
 
     <Color x:Key="Primary">#D1B976</Color>
     <Color x:Key="PrimaryVariant">#F0E7B7</Color>
+    <Color x:Key="PrimarySecondVariant">#E3B93D</Color>
     <Color x:Key="Secondary">#212121</Color>
     <Color x:Key="SecondaryVariant">#AEAEB1</Color>
     <Color x:Key="Tertiary">#FE3C30</Color>

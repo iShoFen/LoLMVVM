@@ -60,10 +60,11 @@
                 <Label Text="Skins" FontSize="35" />
                 <components:PlusButton Grid.Column="1"
                                        FrameBackgroundColor="{StaticResource Primary}"
-                                       FrameBorderColor="{StaticResource Primary}"/>
+                                       FrameBorderColor="{StaticResource Primary}"
+                                       Command="{ Binding AddSkinPageCommand}"/>
             </Grid>
             
-            <views:SkinsViews Skins="{Binding MgrVM.SelectedChampion.Skins}"/>
+            <views:SkinsViews AppVM="{Binding }"/>
         </VerticalStackLayout>
     </ScrollView>
     

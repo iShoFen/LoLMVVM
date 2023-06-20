@@ -1,16 +1,16 @@
-﻿using ViewModel.SkinVms;
+﻿using LoLApp.ViewModel;
 
 namespace LoLApp.UI.Views;
 
 public partial class SkinsViews : ContentView
 {
-    public IEnumerable<SkinVM> Skins
+    public ApplicationVM AppVM
     {
-        get => (IEnumerable<SkinVM>)GetValue(SkinsProperty);
-        set => SetValue(SkinsProperty, value);
+        get => (ApplicationVM)GetValue(AppVMProperty);
+        set => SetValue(AppVMProperty, value);
     }
-    public static readonly BindableProperty SkinsProperty = 
-        BindableProperty.Create(nameof(Skins), typeof(IEnumerable<SkinVM>), typeof(SkinsViews));
+    public static readonly BindableProperty AppVMProperty =
+        BindableProperty.Create(nameof(AppVM), typeof(ApplicationVM), typeof(SkinsViews));
     
     public SkinsViews()
     {

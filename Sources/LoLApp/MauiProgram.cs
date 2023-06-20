@@ -27,6 +27,7 @@ public static class MauiProgram
 			.AddSingleton<IDataManager, StubData>()
 			.AddSingleton<ChampionMgrVM>()
 			.AddSingleton<EditApplicationChampionVM>()
+			.AddSingleton<EditApplicationSkinVM>()
 			.AddSingleton<ApplicationVM>()
 			.AddSingleton<HomePage>()
 			.AddSingleton<ChampionsPage>()
