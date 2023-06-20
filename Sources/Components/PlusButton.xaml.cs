@@ -18,7 +18,7 @@ public partial class PlusButton : ContentView
         set => SetValue(FrameBackgroundColorProperty, value);
     }
     public static readonly BindableProperty FrameBackgroundColorProperty = 
-        BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(PlusButton), Colors.White);
+        BindableProperty.Create(nameof(FrameBackgroundColor), typeof(Color), typeof(PlusButton), Colors.Black);
 
     public Color FrameBorderColor
     {

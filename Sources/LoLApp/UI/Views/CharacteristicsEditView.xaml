@@ -62,6 +62,8 @@
                 Placeholder="0"/>
             
             <components:PlusButton Grid.Column="2" Padding="-10"
+                                   FrameBackgroundColor="{StaticResource Primary}"
+                                   FrameBorderColor="{StaticResource Primary}"
                                    Command="{Binding AddCommand, Source={x:Reference View}}">
             </components:PlusButton>
         </Grid>
