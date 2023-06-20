@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using LoLApp.Extensions;
 using LoLApp.UI.Pages;
+using LoLApp.Utils;
 using MVVMToolkit;
 using ViewModel;
 using ViewModel.ChampionVMs;
@@ -49,20 +50,10 @@ public class EditApplicationChampionVM : ObservableObject
     
     private async void OnFilePickerCommand(string propertyName)
     {
-        try
-        {
-            var options = new PickOptions
-            {
-                PickerTitle = "Please select a file",
-                FileTypes = FilePickerFileType.Images,
-            };
-
-            var result = await FilePicker.Default.PickAsync(options);
-            if (result is null) return;
-            
-            EditableChampion!.GetType().GetProperty(propertyName)?.SetValue(EditableChampion, await result.ToBase64());
-        }
-        catch (TaskCanceledException) {  /* ignored */ }
+        await ImageFilePicker.PickImage(Callback);
+        return;
+        
+        void Callback(FileResult? result) => EditableChampion!.GetType().GetProperty(propertyName)?.SetValue(EditableChampion, result.ToBase64());
     }
 
     private void OnAddCharacteristicCommand()
