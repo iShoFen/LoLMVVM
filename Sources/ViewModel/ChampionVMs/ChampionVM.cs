@@ -67,11 +67,9 @@ public class ChampionVM: ObservableObject<Champion>
     
     internal bool AddSkin(SkinVM skin)
     {
-        if (!Model.AddSkin(skin.Model)) return false;
-        
         skins.Add(skin);
         
-        return true;
+        return Model.AddSkin(skin.Model);
     }
     
     internal bool RemoveSkin(SkinVM skin)
