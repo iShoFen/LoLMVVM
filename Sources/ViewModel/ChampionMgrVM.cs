@@ -5,6 +5,7 @@ using Microsoft.Maui.Controls;
 using Model;
 using MVVMToolkit;
 using ViewModel.ChampionVMs;
+using ViewModel.SkinVms;
 
 namespace ViewModel;
 
@@ -46,6 +47,13 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
         set => SetProperty(ref selectedChampion, value);
     }
     private ChampionVM? selectedChampion;
+    
+    public SkinVM? SelectedSkin
+    {
+        get => selectedSkin;
+        set => SetProperty(ref selectedSkin, value);
+    }
+    private SkinVM? selectedSkin;
     
     public ICommand LoadChampionsCommand { get; }
 
@@ -139,5 +147,20 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
         await Update();
 
         return true;
+    }
+    
+    public async Task<bool> AddSkin(SkinVM skin) => await Model.SkinsMgr.AddItem(skin.Model) != null;
+
+    public async Task<bool> UpdateSkin(SkinVM skin) 
+        => await Model.SkinsMgr.UpdateItem(SelectedSkin!.Model, skin.Model) != null;
+
+    public async Task<bool> RemoveSkin(SkinVM skin)
+    {
+        if (SelectedChampion!.RemoveSkin(skin))
+        {
+            return await Model.SkinsMgr.DeleteItem(skin.Model);
+        }
+        
+        return false;
     }
 }
