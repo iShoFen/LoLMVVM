@@ -6,16 +6,8 @@ namespace LoLApp;
 
 public partial class App : Application
 {
-	public ApplicationVM AppVM { get; }
-	public ChampionMgrVM MgrVM { get; }
-	public EditApplicationChampionVM EditAppChampionVM { get; }
-	
-	public App(ApplicationVM appVM, ChampionMgrVM mgrVM, EditApplicationChampionVM editAppChampionVM)
+	public App()
 	{
-		MgrVM = mgrVM;
-		AppVM = appVM;
-		EditAppChampionVM = editAppChampionVM;
-		
 		InitializeComponent();
 		InitStyleHandlers();
 

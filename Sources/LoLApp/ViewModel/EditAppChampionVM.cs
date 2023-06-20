@@ -10,8 +10,8 @@ namespace LoLApp.ViewModel;
 
 public class EditApplicationChampionVM : ObservableObject
 {
-    private INavigation Navigation =>  Application.Current!.MainPage!.Navigation;
-    public ChampionMgrVM MgrVM => ((App) Application.Current!).MgrVM;
+    private static Shell Shell => Shell.Current;
+    public ChampionMgrVM MgrVM { get; }
     
     public EditableChampionVM? EditableChampion
     {
@@ -39,8 +39,9 @@ public class EditApplicationChampionVM : ObservableObject
     public ICommand AddCharacteristicCommand { get; }
     public ICommand ValidateChampionCommand { get; }
 
-    public EditApplicationChampionVM()
+    public EditApplicationChampionVM(ChampionMgrVM mgrVM)
     {
+        MgrVM = mgrVM;
         FilePickerCommand = new Command<string>(OnFilePickerCommand);
         AddCharacteristicCommand = new Command(OnAddCharacteristicCommand);
         ValidateChampionCommand = new Command(OnValidateChampionCommand);
@@ -76,7 +77,7 @@ public class EditApplicationChampionVM : ObservableObject
         if (MgrVM.SelectedChampion is null)
         {
             _ = await MgrVM.AddChampion(EditableChampion!.ToChampionVM());
-            await Navigation.PopAsync();
+            await Shell.GoToAsync("../" + nameof(ChampionDetailPage), true);
         }
         else
         {
@@ -88,9 +89,7 @@ public class EditApplicationChampionVM : ObservableObject
                 MgrVM.SelectedChampion = updatedChamp;
             }
             
-            await Navigation.PopAsync();
+            await Shell.GoToAsync("..", true);
         }
-
-        if (Navigation.NavigationStack.Count == 1) await Navigation.PushAsync(new ChampionDetailPage());
     }
 }

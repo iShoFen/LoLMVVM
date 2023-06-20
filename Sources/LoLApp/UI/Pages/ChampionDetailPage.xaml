@@ -41,7 +41,7 @@
     <ScrollView>
         <VerticalStackLayout Background="Black">
             
-            <views:ChampionDetailSummaryView/>
+            <views:ChampionDetailSummaryView SelectedChamp="{Binding MgrVM.SelectedChampion}" />
         
             <Label Text="Caractéristiques" FontSize="30" />
             <views:CharacteristicsView Characteristics="{Binding MgrVM.SelectedChampion.Characteristics}"

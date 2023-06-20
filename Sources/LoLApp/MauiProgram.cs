@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using LoLApp.UI.Pages;
+using LoLApp.UI.Views;
 using LoLApp.ViewModel;
 using Microsoft.Extensions.Logging;
 using Model;
@@ -17,16 +18,22 @@ public static class MauiProgram
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
 			.ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			})
+				{
+					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				}
+			)
 			.Services
 			.AddSingleton<IDataManager, StubData>()
 			.AddSingleton<ChampionMgrVM>()
 			.AddSingleton<EditApplicationChampionVM>()
 			.AddSingleton<ApplicationVM>()
-			.AddSingleton<App>();
+			.AddSingleton<HomePage>()
+			.AddSingleton<ChampionsPage>()
+			.AddTransient<ChampionDetailPage>()
+			.AddTransient<AddChampionPage>()
+			.AddTransient<SkinDetailPage>()
+			.AddTransient<AddSkinPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();

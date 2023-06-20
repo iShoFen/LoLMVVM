@@ -6,9 +6,8 @@
              xmlns:components="clr-namespace:Components;assembly=Components"
              xmlns:views="clr-namespace:LoLApp.UI.Views"
              xmlns:converters="clr-namespace:Components.Converters;assembly=Components"
-             xmlns:viewmodel="clr-namespace:LoLApp.ViewModel"
-             x:DataType="viewmodel:EditApplicationChampionVM"
-             x:Class="LoLApp.UI.Views.ChampionEditView">
+             x:Class="LoLApp.UI.Views.ChampionEditView"
+             x:Name="View">
     <ContentView.Resources>
         <converters:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter" />
         <Style TargetType="Frame">
@@ -39,30 +38,30 @@
         
         <Label Grid.Row="0" Grid.Column="0" Text="Nom :" VerticalOptions="Center"/>
         <components:RoundEntry Grid.Row="0" Grid.Column="1"
-                               Text="{Binding EditableChampion.Name, FallbackValue=''}"
+                               Text="{Binding EditAppChampionVM.EditableChampion.Name, Source={x:Reference View}, FallbackValue=''}"
                                Placeholder="Nom du champion"
-                               IsEnabled="{Binding MgrVM.SelectedChampion, Converter={StaticResource IsNullConverter}}" />
+                               IsEnabled="{Binding EditAppChampionVM.MgrVM.SelectedChampion, Source={x:Reference View}, Converter={StaticResource IsNullConverter}}" />
         
         <Label Grid.Row="1" Grid.Column="0" Text="Icone : " VerticalOptions="Center"/>
         <Frame Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" HeightRequest="50" WidthRequest="50">
-            <ImageButton Source="{Binding EditableChampion.Icon, FallbackValue='lol_icon.png', 
+            <ImageButton Source="{Binding EditAppChampionVM.EditableChampion.Icon, Source={x:Reference View}, FallbackValue='lol_icon.png', 
                                   Converter={StaticResource Base64ToImageSourceConverter}, ConverterParameter='lol_icon.png'}"
-                         Command="{Binding FilePickerCommand}" 
+                         Command="{Binding EditAppChampionVM.FilePickerCommand, Source={x:Reference View}}" 
                          CommandParameter="Icon"
                          HeightRequest="50" WidthRequest="50" Aspect="AspectFit"/>
         </Frame>
         
         <Label Grid.Row="2" Grid.Column="0" Text="Image :" VerticalOptions="Center"/>
         <Frame Grid.Row="2" Grid.Column="1">
-            <ImageButton Source="{Binding EditableChampion.Image, FallbackValue='league_of_legends.png',
+            <ImageButton Source="{Binding EditAppChampionVM.EditableChampion.Image, Source={x:Reference View}, FallbackValue='league_of_legends.png',
                                   Converter={StaticResource Base64ToImageSourceConverter}, ConverterParameter='league_of_legends.png'}"
-                         Command="{Binding FilePickerCommand}"
+                         Command="{Binding EditAppChampionVM.FilePickerCommand, Source={x:Reference View}}"
                          CommandParameter="Image"
                          WidthRequest="-1" HeightRequest="200" Aspect="AspectFit"/>
         </Frame>
         
         <Label Grid.Row="3" Grid.Column="0" Text="Bio :" VerticalOptions="Center"/>
-        <Editor Grid.Row="3" Grid.Column="1" Text="{Binding EditableChampion.Bio,
+        <Editor Grid.Row="3" Grid.Column="1" Text="{Binding EditAppChampionVM.EditableChampion.Bio, Source={x:Reference View},
                                                     FallbackValue=''}"
                 Placeholder="Biographie du champion"
                 PlaceholderColor="Gray"
@@ -70,14 +69,14 @@
         
         <Label Grid.Row="4" Grid.Column="0" Text="Classe : " VerticalOptions="Center"/>
         <views:ClassEditView Grid.Row="4" Grid.Column="1"
-                             SelectedItem="{Binding EditableChampion.Class, FallbackValue='Unknown'}" />
+                             SelectedItem="{Binding EditAppChampionVM.EditableChampion.Class, Source={x:Reference View}, FallbackValue='Unknown'}" />
         
         
         <Label Grid.Row="5" Grid.Column="0" Text="Caractéristiques : "/>
         <views:CharacteristicsEditView Grid.Row="5" Grid.Column="1" 
-                                       Characteristics="{Binding EditableChampion.Characteristics}"
-                                       AddCommand="{Binding AddCharacteristicCommand}"
-                                       Key="{Binding Key}"
-                                       Value="{Binding Value}"/>
+                                       Characteristics="{Binding EditAppChampionVM.EditableChampion.Characteristics, Source={x:Reference View}}"
+                                       AddCommand="{Binding EditAppChampionVM.AddCharacteristicCommand, Source={x:Reference View}}"
+                                       Key="{Binding EditAppChampionVM.Key, Source={x:Reference View}}"
+                                       Value="{Binding EditAppChampionVM.Value, Source={x:Reference View}}"/>
     </Grid>
 </ContentView>

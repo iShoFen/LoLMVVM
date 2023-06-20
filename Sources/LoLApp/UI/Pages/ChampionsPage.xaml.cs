@@ -5,12 +5,12 @@ namespace LoLApp.UI.Pages;
 
 public partial class ChampionsPage : ContentPage
 {
-    public ApplicationVM AppVM => ((App) Application.Current)!.AppVM;
+    public ApplicationVM AppVM { get; }
     
-    public ChampionsPage()
+    public ChampionsPage(ApplicationVM appVM)
     {
+        AppVM = appVM;
         InitializeComponent();
         BindingContext = AppVM;
     }
-    
 }

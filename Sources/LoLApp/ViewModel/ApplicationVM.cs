@@ -10,9 +10,9 @@ namespace LoLApp.ViewModel;
 
 public class ApplicationVM: ObservableObject
 {
-    private  INavigation Navigation => Application.Current!.MainPage!.Navigation;
-    public ChampionMgrVM MgrVM => ((App) Application.Current!).MgrVM;
-    public EditApplicationChampionVM EditAppChampionVM => ((App) Application.Current!).EditAppChampionVM;
+    private static Shell Shell => Shell.Current;
+    public ChampionMgrVM MgrVM { get; }
+    public EditApplicationChampionVM EditAppChampionVM { get; }
     
     public ICommand DetailPageCommand { get; }
     public ICommand AddChampionPageCommand { get; }
@@ -21,8 +21,11 @@ public class ApplicationVM: ObservableObject
     public ICommand CancelCommand { get; }
     public ICommand BackCommand { get; }
     
-    public ApplicationVM()
+    public ApplicationVM(ChampionMgrVM mgrVM, EditApplicationChampionVM editAppChampionVM)
     {
+        MgrVM = mgrVM;
+        EditAppChampionVM = editAppChampionVM;
+        
         DetailPageCommand = new Command<ChampionVM>(OnDetailPageCommand);
         
         AddChampionPageCommand = new Command(OnAddChampionPageCommand);
@@ -36,13 +39,13 @@ public class ApplicationVM: ObservableObject
     private async void OnDetailPageCommand(ChampionVM championVm)
     {
         MgrVM.SelectedChampion = championVm;
-        await Navigation.PushAsync(new ChampionDetailPage());
+        await Shell.GoToAsync(nameof(ChampionDetailPage), true);
     }
     
     private async void OnAddChampionPageCommand()
     {
         EditAppChampionVM.EditableChampion = new EditableChampionVM();
-        await Navigation.PushModalAsync(new AddChampionPage());
+        await Shell.GoToAsync(nameof(AddChampionPage), true);
     }
     
     private async void OnEditChampionPageCommand(ChampionVM? championVm)
@@ -50,7 +53,7 @@ public class ApplicationVM: ObservableObject
         if (championVm is not null) MgrVM.SelectedChampion = championVm;
         
         EditAppChampionVM.EditableChampion = new EditableChampionVM(MgrVM.SelectedChampion!);
-        await Navigation.PushModalAsync(new AddChampionPage());
+        await Shell.GoToAsync(nameof(AddChampionPage), true);
     }
     
     private async void OnDeleteChampionCommand(ChampionVM championVm) 
@@ -60,13 +63,13 @@ public class ApplicationVM: ObservableObject
     private async void OnCancelCommand()
     {
         EditAppChampionVM.EditableChampion = null;
-        if (Navigation.NavigationStack.Count == 1) MgrVM.SelectedChampion = null;
-        await Navigation.PopModalAsync();
+        if (Shell.Navigation.NavigationStack.Count == 1) MgrVM.SelectedChampion = null;
+        await Shell.GoToAsync("..", true);
     }
     
     private async void OnBackCommand()
     {
         MgrVM.SelectedChampion = null;
-        await Navigation.PopAsync();
+        await Shell.GoToAsync("..", true);
     }
 }

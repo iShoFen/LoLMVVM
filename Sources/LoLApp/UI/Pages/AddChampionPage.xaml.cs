@@ -4,10 +4,11 @@ namespace LoLApp.UI.Pages;
 
 public partial class AddChampionPage : ContentPage
 {
-    public ApplicationVM AppVM => ((App) Application.Current)!.AppVM;
+    public ApplicationVM AppVM { get; }
     
-    public AddChampionPage()
+    public AddChampionPage(ApplicationVM appVM)
     {
+        AppVM = appVM;
         InitializeComponent();
         BindingContext = AppVM;
     }

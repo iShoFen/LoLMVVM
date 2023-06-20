@@ -5,16 +5,15 @@
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:converters="clr-namespace:Components.Converters;assembly=Components"
              xmlns:components="clr-namespace:Components;assembly=Components"
-             xmlns:champion="clr-namespace:ViewModel.ChampionVMs;assembly=ViewModel"
-             x:DataType="champion:ChampionVM"
-             x:Class="LoLApp.UI.Views.ChampionDetailSummaryView">
+             x:Class="LoLApp.UI.Views.ChampionDetailSummaryView"
+             x:Name="View">
     
     <ContentView.Resources>
         <converters:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter" />
     </ContentView.Resources>
     
     <VerticalStackLayout>
-        <Image Source="{Binding Image, 
+        <Image Source="{Binding SelectedChamp.Image, Source={x:Reference View}, 
                     Converter={StaticResource Base64ToImageSourceConverter}}"
                Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Start">
             <Image.HeightRequest>
@@ -37,17 +36,18 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-            <Label Text="{Binding Name}"
+            <Label Text="{Binding SelectedChamp.Name, Source={x:Reference View}}"
                    FontSize="30"/>
             
             <components:ImageText Grid.Column="2"
-                                  ImageSource="{Binding ClassImage}"
+                                  ImageSource="{Binding SelectedChamp.ClassImage, Source={x:Reference View}}"
                                   ImageColor="{StaticResource Primary}"
-                                  Text="{Binding Class}"
+                                  Text="{Binding SelectedChamp.Class, Source={x:Reference View}}"
                                   TextColor="{StaticResource Primary}"
                                   Margin="10"/>
         </Grid>
         
-        <Label Text="{Binding Bio}" />
+        <Label Text="{Binding SelectedChamp.Bio, Source={x:Reference View}}" />
     </VerticalStackLayout>
+
 </ContentView>
