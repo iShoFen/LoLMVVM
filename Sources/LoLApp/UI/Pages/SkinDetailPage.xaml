@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LoLApp.UI.Pages.SkinDetailPage">
+    
+    <Shell.TitleView>
+        <AbsoluteLayout Margin="{OnPlatform iOS='0,20,0,0'}">
+            <Button Text="&lt; Back" FontSize="Medium"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="0, 0.5, -1, -1"
+                    Command="{Binding BackCommand}"/>
+            
+            <Label Text="{Binding Title, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                   FontAttributes="Bold" FontSize="Medium" TextColor="White"
+                   AbsoluteLayout.LayoutFlags="PositionProportional"
+                   AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"/>
+            
+            <Button Text="Modifier" FontSize="Medium"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="1, 0.5, -1, -1"
+                    Command="{Binding EditChampionPageCommand}"/>
+        </AbsoluteLayout>
+    </Shell.TitleView>
+</ContentPage>
