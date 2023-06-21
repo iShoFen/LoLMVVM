@@ -3,6 +3,7 @@ using Model;
 using MVVMToolkit;
 using ViewModel.Enums;
 using ViewModel.Mappers;
+using ViewModel.SkillVms;
 using ViewModel.SkinVms;
 
 namespace ViewModel.ChampionVMs;

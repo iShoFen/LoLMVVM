@@ -3,7 +3,7 @@ using MVVMToolkit;
 using ViewModel.Enums;
 using ViewModel.Mappers;
 
-namespace ViewModel;
+namespace ViewModel.SkillVms;
 
 public class SkillVM: ObservableObject<Skill>
 {
