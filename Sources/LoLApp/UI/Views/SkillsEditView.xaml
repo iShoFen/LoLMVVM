@@ -13,7 +13,8 @@
         <ListView ItemsSource="{Binding EditAppVM.EditableChampion.Skills, Source={x:Reference View}}"
                   SelectionMode="None"
                   HasUnevenRows="True"
-                  BackgroundColor="Black">
+                  BackgroundColor="Black"
+                  HeightRequest="450">
             <ListView.Behaviors>
                 <toolkit:EventToCommandBehavior
                     EventName="ItemTapped"

@@ -59,7 +59,7 @@
         </Frame>
         
         <HorizontalStackLayout Grid.Row="3" Grid.Column="0">
-            <Label Text="Prix :" VerticalOptions="Center"/>
+            <Label Text="Prix :" VerticalOptions="Center" Margin="0,0,10,0"/>
             <Image Source="rp_icon.png" HeightRequest="20" WidthRequest="20">
                 <Image.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{StaticResource PrimarySecondVariant}"/>
