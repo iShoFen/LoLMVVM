@@ -3,7 +3,7 @@ namespace LoLApp.Utils;
 
 public static class ImageFilePicker
 {
-    public static async Task PickImage(Action<FileResult?> callback)
+    public static async Task<FileResult?> PickImage()
     {
         try
         {
@@ -14,10 +14,11 @@ public static class ImageFilePicker
             };
 
             var result = await FilePicker.Default.PickAsync(options);
-            if (result is null) return;
 
-            callback(result);
+            return result;
         }
         catch (TaskCanceledException) {  /* ignored */ }
+        
+        return null;
     }
 }
