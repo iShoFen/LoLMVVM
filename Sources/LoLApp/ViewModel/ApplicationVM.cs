@@ -93,7 +93,7 @@ public class ApplicationVM: ObservableObject
         await Shell.GoToAsync(nameof(SkinDetailPage), true);
     }
     
-    private async void OnAddSkinCommand(object obj)
+    private async void OnAddSkinCommand()
     {
         EditAppSkinVM.EditableSkin = new EditableSkinVM();
         await Shell.GoToAsync(nameof(AddSkinPage), true);
@@ -111,6 +111,7 @@ public class ApplicationVM: ObservableObject
     
     private async void OnCancelSkinCommand()
     {
+        EditAppSkinVM.EditableSkin = null;
         if (Shell.Navigation.NavigationStack.Count == 2) MgrVM.SelectedSkin = null;
         await Shell.GoToAsync("..", true);
     }

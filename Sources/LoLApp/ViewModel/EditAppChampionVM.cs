@@ -6,6 +6,7 @@ using LoLApp.Utils;
 using MVVMToolkit;
 using ViewModel;
 using ViewModel.ChampionVMs;
+using ViewModel.SkillVms;
 
 namespace LoLApp.ViewModel;
 
@@ -20,6 +21,14 @@ public class EditApplicationChampionVM : ObservableObject
         set => SetProperty(ref editableChampion, value);
     }
     private EditableChampionVM? editableChampion;
+    
+    private SkillVM? SelectedSkill { get; set; }
+    public EditableSkillVM? EditableSkill
+    {
+        get => editableSkill;
+        set => SetProperty(ref editableSkill, value);
+    }
+    private EditableSkillVM? editableSkill;
     
     public string? Key
     {
@@ -38,22 +47,36 @@ public class EditApplicationChampionVM : ObservableObject
     
     public ICommand FilePickerCommand { get; }
     public ICommand AddCharacteristicCommand { get; }
+    public ICommand DeleteCharacteristicCommand { get; }
     public ICommand ValidateChampionCommand { get; }
+    public ICommand AddSkillPageCommand { get; }
+    public ICommand EditSkillPageCommand { get; }
+    public ICommand DeleteSkillCommand { get; }
+    public ICommand CancelSkillCommand { get; }
+    public ICommand ValidateSKillCommand { get; }
+
+    
 
     public EditApplicationChampionVM(ChampionMgrVM mgrVM)
     {
         MgrVM = mgrVM;
+        
         FilePickerCommand = new Command<string>(OnFilePickerCommand);
         AddCharacteristicCommand = new Command(OnAddCharacteristicCommand);
+        DeleteCharacteristicCommand = new Command<string>(OnDeleteCharacteristicCommand);
         ValidateChampionCommand = new Command(OnValidateChampionCommand);
+        
+        AddSkillPageCommand = new Command(OnAddSkillPageCommand);
+        EditSkillPageCommand = new Command<SkillVM?>(OnEditSkillPageCommand);
+        DeleteSkillCommand = new Command<SkillVM>(OnDeleteSkillCommand);
+        CancelSkillCommand = new Command(OnCancelSkillCommand);
+        ValidateSKillCommand = new Command(OnValidateSkillCommand);
     }
     
     private async void OnFilePickerCommand(string propertyName)
     {
-        await ImageFilePicker.PickImage(Callback);
-        return;
-        
-        void Callback(FileResult? result) => EditableChampion!.GetType().GetProperty(propertyName)?.SetValue(EditableChampion, result.ToBase64());
+        var result = await ImageFilePicker.PickImage();
+        EditableChampion!.GetType().GetProperty(propertyName)?.SetValue(EditableChampion, result.ToBase64());
     }
 
     private void OnAddCharacteristicCommand()
@@ -62,6 +85,10 @@ public class EditApplicationChampionVM : ObservableObject
         EditableChampion!.AddCharacteristic(Key, Value);
     }
 
+    private void OnDeleteCharacteristicCommand(string key)
+    {
+        EditableChampion!.RemoveCharacteristic(key);
+    }
 
     private async void OnValidateChampionCommand()
     {
@@ -82,5 +109,39 @@ public class EditApplicationChampionVM : ObservableObject
             
             await Shell.GoToAsync("..", true);
         }
+    }
+
+    private void OnAddSkillPageCommand()
+    {
+        EditableSkill = new EditableSkillVM();
+        // Shell.GoToAsync(nameof(EditSkillPage), true);
+    }
+    
+    private void OnEditSkillPageCommand(SkillVM skillVM)
+    {
+        SelectedSkill = skillVM;
+        EditableSkill = new EditableSkillVM(skillVM);
+        // Shell.GoToAsync(nameof(EditSkillPage), true);
+    }
+
+    private void OnDeleteSkillCommand(SkillVM skillVM)
+    {
+        EditableChampion!.RemoveSkill(skillVM);
+    }
+
+    private void OnCancelSkillCommand()
+    {
+        EditableSkill = null;
+        Shell.GoToAsync("..", true);
+    }
+    
+    private async void OnValidateSkillCommand()
+    {
+        if (SelectedSkill is null)
+        {
+            EditableChampion!.AddSkill(EditableSkill!.ToSkillVM());
+        }
+        // Maybe Need to triger UpdateList or Remove/ Add skill to update view
+        await Shell.GoToAsync("../", true);
     }
 }
