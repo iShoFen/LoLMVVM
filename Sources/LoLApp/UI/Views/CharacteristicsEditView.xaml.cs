@@ -1,43 +1,19 @@
 ﻿using System.Windows.Input;
+using LoLApp.ViewModel;
 using MVVMToolkit;
 
 namespace LoLApp.UI.Views;
 
 public partial class CharacteristicsEditView : ContentView
 {
-    public IDictionary<string, int> Characteristics
+    public EditApplicationChampionVM EditAppChampionVM
     {
-        get => (IDictionary<string, int>) GetValue(CharacteristicsProperty);
-        set => SetValue(CharacteristicsProperty, value);
+        get => (EditApplicationChampionVM) GetValue(EditAppChampionVMProperty);
+        set => SetValue(EditAppChampionVMProperty, value);
     }
-    public static readonly BindableProperty CharacteristicsProperty =
-        BindableProperty.Create(nameof(Characteristics), typeof(IDictionary<string, int>), typeof(CharacteristicsEditView));
+    public static readonly BindableProperty EditAppChampionVMProperty =
+        BindableProperty.Create(nameof(EditAppChampionVM), typeof(EditApplicationChampionVM), typeof(CharacteristicsEditView));
     
-    public ICommand AddCommand
-    {
-        get => (ICommand) GetValue(AddCommandProperty);
-        set => SetValue(AddCommandProperty, value);
-    }
-    public static readonly BindableProperty AddCommandProperty =
-        BindableProperty.Create(nameof(AddCommand), typeof(ICommand), typeof(CharacteristicsEditView));
-
-    public string Key
-    {
-        get => (string) GetValue(KeyProperty);
-        set => SetValue(KeyProperty, value);
-    }
-
-    public static readonly BindableProperty KeyProperty =
-        BindableProperty.Create(nameof(Key), typeof(string), typeof(CharacteristicsEditView), string.Empty, BindingMode.TwoWay);
-
-    public int Value
-    {
-        get => (int) GetValue(ValueProperty);
-        set => SetValue(ValueProperty, value);
-    }
-    public static readonly BindableProperty ValueProperty =
-        BindableProperty.Create(nameof(Value), typeof(int), typeof(CharacteristicsEditView), 0, BindingMode.TwoWay);
-
     public CharacteristicsEditView()
     {
         InitializeComponent();

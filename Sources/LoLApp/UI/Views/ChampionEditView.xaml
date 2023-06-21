@@ -73,11 +73,7 @@
         
         
         <Label Grid.Row="5" Grid.Column="0" Text="Caractéristiques : "/>
-        <views:CharacteristicsEditView Grid.Row="5" Grid.Column="1" 
-                                       Characteristics="{Binding EditAppChampionVM.EditableChampion.Characteristics, Source={x:Reference View}}"
-                                       AddCommand="{Binding EditAppChampionVM.AddCharacteristicCommand, Source={x:Reference View}}"
-                                       Key="{Binding EditAppChampionVM.Key, Source={x:Reference View}}"
-                                       Value="{Binding EditAppChampionVM.Value, Source={x:Reference View}}"/>
+        <views:CharacteristicsEditView Grid.Row="5" Grid.Column="1" EditAppChampionVM="{Binding EditAppChampionVM, Source={x:Reference View}}"/>
         
         <Label Grid.Row="6" Grid.Column="0" Text="Compétences : "/>
         
