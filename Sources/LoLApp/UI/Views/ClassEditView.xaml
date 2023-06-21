@@ -3,9 +3,9 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:compConverters="clr-namespace:Components.Converters;assembly=Components"
-             xmlns:converters="clr-namespace:LoLApp.Converters"
-             xmlns:components="clr-namespace:Components;assembly=Components"
+                xmlns:components="clr-namespace:Components;assembly=Components"
              xmlns:viewmodel="clr-namespace:ViewModel.Enums;assembly=ViewModel"
+             xmlns:converters="clr-namespace:LoLApp.Converters"
              x:Class="LoLApp.UI.Views.ClassEditView"
              x:Name="View">
     <ContentView.Resources>

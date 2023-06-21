@@ -8,50 +8,52 @@
     
     <VerticalStackLayout>
         <Frame BackgroundColor="{StaticResource Black}">
-            <ListView Margin="10"
-                      ItemsSource="{Binding EditAppChampionVM.EditableChampion.Characteristics, Source={x:Reference View}}"
-                      SelectionMode="None"
-                      VerticalScrollBarVisibility="Never"
-                      HasUnevenRows="True">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Border StrokeThickness="0" BackgroundColor="{StaticResource PrimaryVariant}"
-                                    Margin="00,5">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10,10,0,10" />
-                                </Border.StrokeShape>
-                                <SwipeView>
-                                    <SwipeView.RightItems>
-                                        <SwipeItem Text="Supprimer"
-                                                   Command="{Binding  EditAppChampionVM.DeleteCharacteristicCommand,
-                                                         Source={x:Reference View}}"
-                                                   CommandParameter="{Binding Key}"
-                                                   BackgroundColor="{StaticResource Tertiary}" />
-                                    </SwipeView.RightItems>
-                                
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
+            <ScrollView HeightRequest="200">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding EditAppChampionVM.EditableChampion.Characteristics, 
+                                                              Source={x:Reference View}}"
+                                     Margin="10">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout>
+                                <Border StrokeThickness="0" BackgroundColor="{StaticResource PrimaryVariant}"
+                                        Margin="00,5">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10,10,0,10" />
+                                    </Border.StrokeShape>
+                                        <SwipeView>
+                                            <SwipeView.RightItems>
+                                                <SwipeItem Text="Supprimer"
+                                                           Command="{Binding  EditAppChampionVM.DeleteCharacteristicCommand,
+                                                                 Source={x:Reference View}}"
+                                                           CommandParameter="{Binding Key}"
+                                                           BackgroundColor="{StaticResource Tertiary}" />
+                                            </SwipeView.RightItems>
                                         
-                                        <Label Text="{Binding Key}" 
-                                               FontSize="Large"
-                                               TextColor="Black"
-                                               Margin="10"/>
-                                        
-                                        <Label Grid.Column="1" Text="{Binding Value}" 
-                                               FontSize="Large"
-                                               TextColor="Black"
-                                               Margin="10"/>
-                                    </Grid>
-                                </SwipeView>
-                            </Border>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <Label Text="{Binding Key}" 
+                                                       FontSize="Large"
+                                                       TextColor="Black"
+                                                       Margin="10"/>
+                                                
+                                                <Label Grid.Column="1" Text="{Binding Value}" 
+                                                       FontSize="Large"
+                                                       TextColor="Black"
+                                                       Margin="10"/>
+                                            </Grid>
+                                        </SwipeView>
+                                </Border>
+                                <BoxView Color="Gray"
+                                     HeightRequest="1" Margin="20,0,0,0"/>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </ScrollView>
         </Frame>
         
         <Grid Margin="10,10,0,10" ColumnSpacing="10">

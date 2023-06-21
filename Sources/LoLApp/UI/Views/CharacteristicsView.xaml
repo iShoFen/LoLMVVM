@@ -4,28 +4,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LoLApp.UI.Views.CharacteristicsView"
              x:Name="View">
-    <CollectionView ItemsSource="{Binding Characteristics, Source={x:Reference View}}" >
-        <CollectionView.ItemsLayout>
-            <GridItemsLayout Orientation="Vertical" 
-                             HorizontalItemSpacing="20"
-                             VerticalItemSpacing="20"
-                             Span="3" />
-        </CollectionView.ItemsLayout>
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame BorderColor="{StaticResource Primary}" BackgroundColor="Black" 
-                       CornerRadius="0" Padding="10,20">
-                    <Grid VerticalOptions="Center">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        
-                        <Label Text="{Binding Key}" Margin="0,5" HorizontalTextAlignment="Center" />
-                        <Label Grid.Row="1" Text="{Binding Value}" Margin="0,5" HorizontalTextAlignment="Center" />
-                    </Grid>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <ScrollView HeightRequest="250">
+        <FlexLayout BindableLayout.ItemsSource="{Binding Characteristics, Source={x:Reference View}}"
+                    Direction="Row" JustifyContent="Start" AlignItems="Center" Wrap="Wrap">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="{StaticResource Primary}" BackgroundColor="Black"
+                           CornerRadius="0" Padding="10,20" Margin="5" HeightRequest="110" WidthRequest="110">
+                        <Grid VerticalOptions="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                    
+                            <Label Text="{Binding Key}" Margin="0,5" HorizontalTextAlignment="Center" />
+                            <Label Grid.Row="1" Text="{Binding Value}" Margin="0,5" HorizontalTextAlignment="Center" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </FlexLayout>
+    </ScrollView>
 </ContentView>

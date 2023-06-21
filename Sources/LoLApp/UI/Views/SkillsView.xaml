@@ -2,36 +2,37 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:ViewModel.SkillVms;assembly=ViewModel"
              x:Class="LoLApp.UI.Views.SkillsView"
              x:Name="View">
-    <ListView ItemsSource="{Binding Skills, Source={x:Reference View}}"
-              SelectionMode="None"
-              HasUnevenRows="True"
-              BackgroundColor="Black">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="300"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Label Text="{Binding Name}"
-                               FontSize="Large" Margin="0"/>
-                        
-                        <Label Grid.Row="0" Grid.Column="1" 
-                               Text="{Binding Type}" Margin="0" VerticalTextAlignment="Center"/>
-                        
-                        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                               Text="{Binding Description}" Margin="0" />
-                    </Grid>
-                </ViewCell>
+    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Skills, Source={x:Reference View}}"
+                         BackgroundColor="Black">
+        <BindableLayout.ItemTemplate>
+            <DataTemplate x:DataType="viewmodel:SkillVM">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label Text="{Binding Name}"
+                           FontSize="Large" Margin="0"/>
+                    
+                    <Label Grid.Row="0" Grid.Column="1" 
+                           Text="{Binding Type}" Margin="0" VerticalTextAlignment="Center"/>
+                    
+                    <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                           Text="{Binding Description}" Margin="0" />
+                    
+                    <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Color="Gray"
+                             HeightRequest="1" Margin="20,5,0,0"/>
+                </Grid>
             </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+        </BindableLayout.ItemTemplate>
+    </VerticalStackLayout>
 </ContentView>
