@@ -4,15 +4,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Components.PlusButton"
              x:Name="View">
-    <ContentView.BindingContext>
-        <x:Reference Name="View"/>
-    </ContentView.BindingContext>
     
     <Frame CornerRadius="90" Padding="10" Margin="10" 
-           BorderColor="{Binding FrameBorderColor}"
-           BackgroundColor="{Binding FrameBackgroundColor}">
-        <Button Text="+" FontSize="Title"  TextColor="{Binding Color}" Padding="0"
-                Command="{Binding Command}"
-                CommandParameter="{Binding CommandParameter}"/>
+           BorderColor="{Binding FrameBorderColor, Source={x:Reference View}}"
+           BackgroundColor="{Binding FrameBackgroundColor, Source={x:Reference View}}">
+        <Button Text="+" FontSize="Title"  TextColor="{Binding Color, Source={x:Reference View}}" Padding="0"
+                Command="{Binding Command, Source={x:Reference View}}"
+                CommandParameter="{Binding CommandParameter, Source={x:Reference View}}"/>
     </Frame>
 </ContentView>
