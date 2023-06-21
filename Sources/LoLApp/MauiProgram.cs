@@ -32,9 +32,10 @@ public static class MauiProgram
 			.AddSingleton<HomePage>()
 			.AddSingleton<ChampionsPage>()
 			.AddTransient<ChampionDetailPage>()
-			.AddTransient<AddChampionPage>()
 			.AddTransient<SkinDetailPage>()
-			.AddTransient<AddSkinPage>();
+			.AddTransient<AddSkinPage>()
+			.AddTransient<AddChampionPage>()
+			.AddTransient<AddSkillPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();

@@ -32,9 +32,9 @@ public class EditApplicationSkinVM: ObservableObject
     
     private async void OnFilePickerCommand(string propertyName)
     {
-        var result = ImageFilePicker.PickImage().Result;
+        var result = await ImageFilePicker.PickImage();
         if (result is null) return;
-        EditableSkin!.GetType().GetProperty(propertyName)?.SetValue(EditableSkin, result.ToBase64());
+        EditableSkin!.GetType().GetProperty(propertyName)?.SetValue(EditableSkin, await result.ToBase64());
     }
     
     private async void OnValidateSkinCommand()
