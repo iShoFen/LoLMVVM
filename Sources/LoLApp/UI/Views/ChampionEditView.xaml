@@ -78,5 +78,8 @@
                                        AddCommand="{Binding EditAppChampionVM.AddCharacteristicCommand, Source={x:Reference View}}"
                                        Key="{Binding EditAppChampionVM.Key, Source={x:Reference View}}"
                                        Value="{Binding EditAppChampionVM.Value, Source={x:Reference View}}"/>
+        
+        <Label Grid.Row="6" Grid.Column="0" Text="Compétences : "/>
+        
     </Grid>
 </ContentView>
