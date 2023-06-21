@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:components="clr-namespace:Components;assembly=Components"
+             xmlns:converters="clr-namespace:Components.Converters;assembly=Components"
+             xmlns:viewmodel="clr-namespace:ViewModel.Enums;assembly=ViewModel"
+             x:Class="LoLApp.UI.Views.SkillEditView"
+             x:Name="View">
+    <ContentView.Resources>
+        <Style TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryVariant}"/>
+            <Setter Property="BorderColor" Value="{StaticResource PrimaryVariant}"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="CornerRadius" Value="0"/>
+        </Style>
+        <toolkit:IsNullConverter x:Key="IsNullConverter"/>
+        <converters:EnumToValuesConverter x:TypeArguments="viewmodel:SkillTypeVM" x:Key="EnumToValuesConverter"/>
+        <toolkit:EnumToIntConverter x:Key="EnumToIntConverter" />
+    </ContentView.Resources>
+    
+    <Grid Margin="10" RowSpacing="20" ColumnSpacing="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="300"/>
+        </Grid.RowDefinitions>
+        
+        <Label Grid.Row="0" Grid.Column="0" Text="Nom :" VerticalOptions="Center"/>
+        <components:RoundEntry Grid.Row="0" Grid.Column="1"
+                               Text="{Binding EditAppVM.EditableSkill.Name, Source={x:Reference View}, FallbackValue=''}"
+                               Placeholder="Nom de la compétence"
+                               IsEnabled="{Binding EditAppVM.SelectedSkill, Source={x:Reference View}, Converter={StaticResource IsNullConverter}}" />
+        
+        
+
+        <Label Grid.Row="1" Grid.Column="0" Text="Type :" VerticalOptions="Center"/>
+        <Picker Grid.Row="1" Grid.Column="1"
+                BackgroundColor="{StaticResource PrimaryVariant}"
+                Title="Choisissez un type de skill"
+                ItemsSource="{Binding EditAppVM.SkillTypes, Source={x:Reference View}}"
+                SelectedItem="{Binding EditAppVM.EditableSkill.Type, Source={x:Reference View}, FallbackValue=''}"
+                IsEnabled="{Binding EditAppVM.SelectedSkill, Source={x:Reference View}, Converter={StaticResource IsNullConverter}}"/>
+        
+        <Label Grid.Row="2" Grid.Column="0" Text="Description :" VerticalOptions="Center"/>
+        <Editor Grid.Row="2" Grid.Column="1" Text="{Binding EditAppVM.EditableSkill.Description, Source={x:Reference View},
+                                                    FallbackValue=''}"
+                FontSize="Large" BackgroundColor="{StaticResource PrimaryVariant}"/>
+    </Grid>
+</ContentView>

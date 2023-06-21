@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:converters="clr-namespace:Components.Converters;assembly=Components"
+             xmlns:viewmodel="clr-namespace:LoLApp.ViewModel"
+             xmlns:views="clr-namespace:LoLApp.UI.Views"
+             x:DataType="viewmodel:EditApplicationChampionVM"
+             x:Class="LoLApp.UI.Pages.AddSkillPage"
+             Shell.PresentationMode="ModalAnimated">
+        <ContentPage.Resources>
+            <ResourceDictionary>
+                <converters:IsNullToObjectConverter x:TypeArguments="system:String" x:Key="IsNullToObjectConverterButton" TrueObject="Ajouter" FalseObject="Modifier"/>
+                <converters:IsNullToObjectConverter x:TypeArguments="system:String" x:Key="IsNullToObjectConverterTitle" TrueObject="Nouveau Skill" FalseObject="Modifier le Skill"/>
+            
+                <Style TargetType="Label" BaseResourceKey="BaseLabelStyle">
+                    <Setter Property="TextColor" Value="{StaticResource Primary}"/>
+                    <Setter Property="FontSize" Value="Body"/>
+                </Style>
+            </ResourceDictionary>
+        </ContentPage.Resources>
+    
+        <Grid BackgroundColor="Black">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+        
+            <VerticalStackLayout Margin="10">
+                <Label Text="{Binding .SelectedSkill, 
+                          Converter={StaticResource IsNullToObjectConverterTitle}}" 
+                       HorizontalOptions="Center"
+                       FontSize="30" />
+                <BoxView WidthRequest="-1"  HeightRequest="1"
+                         Margin="90,5"
+                         Color="{StaticResource Primary}"/>
+            </VerticalStackLayout>
+        
+            <ScrollView Grid.Row="1">
+                <views:SkillEditView EditAppVM="{Binding }"  />
+            </ScrollView>
+        
+            <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="40" Margin="0,20">
+                <Button Text="{Binding SelectedSkill, 
+                           Converter={StaticResource IsNullToObjectConverterButton}}"
+                        Command="{Binding ValidateSKillCommand}"/>
+            
+                <Button Text="Annuler" Command="{Binding CancelSkillCommand}"/>
+            
+            </HorizontalStackLayout>
+        </Grid>
+</ContentPage>

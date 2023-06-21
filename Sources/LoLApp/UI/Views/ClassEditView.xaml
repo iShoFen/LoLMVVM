@@ -44,7 +44,7 @@
         
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <Border Padding="10,20" Margin="2">
+                <Border Padding="10,20" Margin="2" Stroke="{StaticResource PrimaryVariant}"> 
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="50,50,0,50"/>
                     </Border.StrokeShape>

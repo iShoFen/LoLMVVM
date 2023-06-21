@@ -76,6 +76,7 @@
         <views:CharacteristicsEditView Grid.Row="5" Grid.Column="1" EditAppChampionVM="{Binding EditAppChampionVM, Source={x:Reference View}}"/>
         
         <Label Grid.Row="6" Grid.Column="0" Text="Compétences : "/>
+        <views:SkillsEditView Grid.Row="6" Grid.Column="1" EditAppVM="{Binding EditAppChampionVM, Source={x:Reference View}}"/>
         
     </Grid>
 </ContentView>

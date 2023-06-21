@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LoLApp.ViewModel;
+﻿using LoLApp.ViewModel;
 
 namespace LoLApp.UI.Views;
 
-public partial class SkillsEditView : ContentView
+public partial class SkillEditView : ContentView
 {
     public  EditApplicationChampionVM EditAppVM
     {
@@ -17,7 +12,7 @@ public partial class SkillsEditView : ContentView
     public static readonly BindableProperty EditAppVMProperty =
         BindableProperty.Create(nameof(EditAppVM), typeof(EditApplicationChampionVM), typeof(SkillsEditView));
     
-    public SkillsEditView()
+    public SkillEditView()
     {
         InitializeComponent();
     }

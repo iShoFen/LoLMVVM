@@ -5,7 +5,7 @@
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:converters="clr-namespace:Components.Converters;assembly=Components"
              xmlns:viewmodel="clr-namespace:LoLApp.ViewModel"
-                xmlns:views="clr-namespace:LoLApp.UI.Views"
+             xmlns:views="clr-namespace:LoLApp.UI.Views"
              x:DataType="viewmodel:ApplicationVM"
              x:Class="LoLApp.UI.Pages.AddSkinPage"
              Shell.PresentationMode="ModalAnimated">

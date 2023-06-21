@@ -2,36 +2,66 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="LoLApp.UI.Views.SkillsEditView"
              x:Name="View">
-    <ListView ItemsSource="{Binding EditAppVM.EditableChampion.Skills, Source={x:Reference View}}"
-              SelectionMode="None"
-              HasUnevenRows="True"
-              BackgroundColor="Black">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="300"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Label Text="{Binding Name}"
-                               FontSize="Large" Margin="0"/>
-                        
-                        <Label Grid.Row="0" Grid.Column="1" 
-                               Text="{Binding Type}" Margin="0" VerticalTextAlignment="Center"/>
-                        
-                        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                               Text="{Binding Description}" Margin="0" />
-                    </Grid>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView> 
+    <ContentView.Resources>
+        <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter"/>
+    </ContentView.Resources>
+    
+    <VerticalStackLayout>
+        <ListView ItemsSource="{Binding EditAppVM.EditableChampion.Skills, Source={x:Reference View}}"
+                  SelectionMode="None"
+                  HasUnevenRows="True"
+                  BackgroundColor="Black">
+            <ListView.Behaviors>
+                <toolkit:EventToCommandBehavior
+                    EventName="ItemTapped"
+                    Command="{Binding EditAppVM.EditSkillPageCommand, Source={x:Reference View}}"
+                    EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}"/>
+            </ListView.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItem Text="Supprimer"
+                                           Command="{Binding EditAppVM.DeleteSkillCommand,
+                                                     Source={x:Reference View}}"
+                                           CommandParameter="{Binding}"
+                                           BackgroundColor="{StaticResource Tertiary}" />
+                                <SwipeItem Text="Modifier"
+                                           Command="{Binding EditAppVM.EditSkillPageCommand,
+                                                     Source={x:Reference View}}"
+                                           CommandParameter="{Binding}"
+                                           BackgroundColor="{StaticResource SecondaryVariant}" />
+                            </SwipeView.RightItems>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                            
+                                <Label Text="{Binding Name}"
+                                       FontSize="Large" Margin="0"/>
+                            
+                                <Label Grid.Row="0" Grid.Column="1" 
+                                       Text="{Binding Type}" Margin="0" VerticalTextAlignment="Center"/>
+                            
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="{Binding Description}" Margin="0" />
+                            </Grid>
+                        </SwipeView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView> 
+        <Button Text="Ajouter" HorizontalOptions="Center" Margin="0,20,0,0"
+                Command="{Binding EditAppVM.AddSkillPageCommand, Source={x:Reference View}}"/>
+    </VerticalStackLayout>
+    
 </ContentView>
