@@ -1,4 +1,7 @@
 ﻿#nullable enable
+using System.Threading.Tasks;
+using Microsoft.Maui.Storage;
+
 namespace LoLApp.Utils;
 
 public static class ImageFilePicker

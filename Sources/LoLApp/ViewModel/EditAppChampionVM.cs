@@ -1,10 +1,10 @@
 ﻿#nullable enable
 using System.Collections.ObjectModel;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using LoLApp.Extensions;
 using LoLApp.UI.Pages;
 using LoLApp.Utils;
-using MVVMToolkit;
 using ViewModel;
 using ViewModel.ChampionVMs;
 using ViewModel.Enums;
@@ -12,74 +12,33 @@ using ViewModel.SkillVms;
 
 namespace LoLApp.ViewModel;
 
-public class EditApplicationChampionVM : ObservableObject
+public partial class EditApplicationChampionVM : ObservableObject
 {
     private static Shell Shell => Shell.Current;
     public ChampionMgrVM MgrVM { get; }
     
-    public EditableChampionVM? EditableChampion
-    {
-        get => editableChampion;
-        set => SetProperty(ref editableChampion, value);
-    }
+    [ObservableProperty]
     private EditableChampionVM? editableChampion;
     
     public SkillVM? SelectedSkill { get; set; }
-    public EditableSkillVM? EditableSkill
-    {
-        get => editableSkill;
-        set => SetProperty(ref editableSkill, value);
-    }
+    
+    [ObservableProperty]
     private EditableSkillVM? editableSkill;
     
     // Only done cause for an unknown reason, the EnumToValyesConverter doesn't work
     public ReadOnlyCollection<SkillTypeVM> SkillTypes { get; } = new(Enum.GetValues<SkillTypeVM>()
                                                                          .Except(new[] { SkillTypeVM.Unknown }).ToList());
     
-    public string? Key
-    {
-        get => key;
-        set => SetProperty(ref key, value);
-    }
-
+    [ObservableProperty]
     private string? key;
     
-    public int Value
-    {
-        get => value;
-        set => SetProperty(ref this.value, value);
-    }
+    [ObservableProperty]
     private int value;
     
-    public ICommand FilePickerCommand { get; }
-    public ICommand AddCharacteristicCommand { get; }
-    public ICommand DeleteCharacteristicCommand { get; }
-    public ICommand ValidateChampionCommand { get; }
-    public ICommand AddSkillPageCommand { get; }
-    public ICommand EditSkillPageCommand { get; }
-    public ICommand DeleteSkillCommand { get; }
-    public ICommand CancelSkillCommand { get; }
-    public ICommand ValidateSKillCommand { get; }
+    public EditApplicationChampionVM(ChampionMgrVM mgrVM) => MgrVM = mgrVM;
 
-    
-
-    public EditApplicationChampionVM(ChampionMgrVM mgrVM)
-    {
-        MgrVM = mgrVM;
-        
-        FilePickerCommand = new Command<string>(OnFilePickerCommand);
-        AddCharacteristicCommand = new Command(OnAddCharacteristicCommand);
-        DeleteCharacteristicCommand = new Command<string>(OnDeleteCharacteristicCommand);
-        ValidateChampionCommand = new Command(OnValidateChampionCommand);
-        
-        AddSkillPageCommand = new Command(OnAddSkillPageCommand);
-        EditSkillPageCommand = new Command<SkillVM>(OnEditSkillPageCommand);
-        DeleteSkillCommand = new Command<SkillVM>(OnDeleteSkillCommand);
-        CancelSkillCommand = new Command(OnCancelSkillCommand);
-        ValidateSKillCommand = new Command(OnValidateSkillCommand);
-    }
-    
-    private async void OnFilePickerCommand(string propertyName)
+    [RelayCommand]
+    private async Task FilePicker(string propertyName)
     {
         var result = await ImageFilePicker.PickImage();
         if (result is null) return;
@@ -87,18 +46,21 @@ public class EditApplicationChampionVM : ObservableObject
         EditableChampion!.GetType().GetProperty(propertyName)?.SetValue(EditableChampion, await result.ToBase64());
     }
 
-    private void OnAddCharacteristicCommand()
+    [RelayCommand]
+    private void AddCharacteristic()
     {
         if (Key is null) return;
         EditableChampion!.AddCharacteristic(Key, Value);
     }
 
-    private void OnDeleteCharacteristicCommand(string key)
+    [RelayCommand]
+    private void DeleteCharacteristic(string charKey)
     {
-        EditableChampion!.RemoveCharacteristic(key);
+        EditableChampion!.RemoveCharacteristic(charKey);
     }
 
-    private async void OnValidateChampionCommand()
+    [RelayCommand]
+    private async Task ValidateChampion()
     {
         if (MgrVM.SelectedChampion is null)
         {
@@ -119,32 +81,37 @@ public class EditApplicationChampionVM : ObservableObject
         }
     }
 
-    private void OnAddSkillPageCommand()
+    [RelayCommand]
+    private void AddSkillPage()
     {
         EditableSkill = new EditableSkillVM();
         Shell.GoToAsync(nameof(AddSkillPage), true);
     }
     
-    private void OnEditSkillPageCommand(SkillVM skillVM)
+    [RelayCommand]
+    private void EditSkillPage(SkillVM skillVM)
     {
         SelectedSkill = skillVM;
         EditableSkill = new EditableSkillVM(skillVM);
         Shell.GoToAsync(nameof(AddSkillPage), true);
     }
 
-    private void OnDeleteSkillCommand(SkillVM skillVM)
+    [RelayCommand]
+    private void DeleteSkill(SkillVM skillVM)
     {
         EditableChampion!.RemoveSkill(skillVM);
     }
 
-    private void OnCancelSkillCommand()
+    [RelayCommand]
+    private void CancelSkill()
     {
         EditableSkill = null;
         SelectedSkill = null;
         Shell.GoToAsync("..", true);
     }
     
-    private async void OnValidateSkillCommand()
+    [RelayCommand]
+    private async Task ValidateSkill()
     {
         if (SelectedSkill is null)
         {

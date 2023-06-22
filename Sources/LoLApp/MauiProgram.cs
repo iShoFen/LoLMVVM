@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui;
 using LoLApp.UI.Pages;
-using LoLApp.UI.Views;
 using LoLApp.ViewModel;
 using Microsoft.Extensions.Logging;
 using Model;

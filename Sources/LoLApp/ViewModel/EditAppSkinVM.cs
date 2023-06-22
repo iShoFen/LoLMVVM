@@ -1,43 +1,34 @@
 ﻿#nullable enable
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using LoLApp.Extensions;
 using LoLApp.UI.Pages;
 using LoLApp.Utils;
-using MVVMToolkit;
 using ViewModel;
 using ViewModel.SkinVms;
 
 namespace LoLApp.ViewModel;
 
-public class EditApplicationSkinVM: ObservableObject
+public partial class EditApplicationSkinVM: ObservableObject
 {
     private static Shell Shell => Shell.Current;
     public ChampionMgrVM MgrVM { get; }
     
-    public EditableSkinVM? EditableSkin
-    {
-        get => editableSkin;
-        set => SetProperty(ref editableSkin, value);
-    }
+    [ObservableProperty]
     private EditableSkinVM? editableSkin;
-    public ICommand FilePickerCommand { get; }
-    public ICommand ValidateSkinCommand { get; }
 
-    public EditApplicationSkinVM(ChampionMgrVM mgrVM)
-    {
-        MgrVM = mgrVM;
-        FilePickerCommand = new Command<string>(OnFilePickerCommand);
-        ValidateSkinCommand = new Command(OnValidateSkinCommand);
-    }
-    
-    private async void OnFilePickerCommand(string propertyName)
+    public EditApplicationSkinVM(ChampionMgrVM mgrVM) => MgrVM = mgrVM;
+
+    [RelayCommand]
+    private async Task FilePicker(string propertyName)
     {
         var result = await ImageFilePicker.PickImage();
         if (result is null) return;
         EditableSkin!.GetType().GetProperty(propertyName)?.SetValue(EditableSkin, await result.ToBase64());
     }
     
-    private async void OnValidateSkinCommand()
+    [RelayCommand]
+    private async Task ValidateSkin()
     {
         if (MgrVM.SelectedSkin is null)
         {

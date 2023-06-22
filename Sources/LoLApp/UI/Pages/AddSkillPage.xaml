@@ -45,7 +45,7 @@
             <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="40" Margin="0,20">
                 <Button Text="{Binding SelectedSkill, 
                            Converter={StaticResource IsNullToObjectConverterButton}}"
-                        Command="{Binding ValidateSKillCommand}"/>
+                        Command="{Binding ValidateSkillCommand}"/>
             
                 <Button Text="Annuler" Command="{Binding CancelSkillCommand}"/>
             

@@ -1,5 +1,4 @@
-﻿
-using LoLApp.ViewModel;
+﻿using LoLApp.ViewModel;
 
 namespace LoLApp.UI.Pages;
 

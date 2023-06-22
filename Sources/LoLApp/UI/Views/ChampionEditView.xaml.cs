@@ -1,6 +1,4 @@
-﻿using System.Windows.Input;
-using LoLApp.ViewModel;
-using ViewModel.ChampionVMs;
+﻿using LoLApp.ViewModel;
 
 namespace LoLApp.UI.Views;
 

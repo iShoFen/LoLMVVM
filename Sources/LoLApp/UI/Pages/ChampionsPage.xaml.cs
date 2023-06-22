@@ -1,5 +1,4 @@
 ﻿using LoLApp.ViewModel;
-using ViewModel;
 
 namespace LoLApp.UI.Pages;
 

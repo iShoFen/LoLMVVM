@@ -1,68 +1,44 @@
 ﻿#nullable enable
 
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using LoLApp.UI.Pages;
-using MVVMToolkit;
 using ViewModel;
 using ViewModel.ChampionVMs;
 using ViewModel.SkinVms;
 
 namespace LoLApp.ViewModel;
 
-public class ApplicationVM: ObservableObject
+public partial class ApplicationVM: ObservableObject
 {
     private static Shell Shell => Shell.Current;
     public ChampionMgrVM MgrVM { get; }
     public EditApplicationChampionVM EditAppChampionVM { get; }
     public EditApplicationSkinVM EditAppSkinVM { get; }
     
-    public ICommand DetailPageCommand { get; }
-    public ICommand AddChampionPageCommand { get; }
-    public ICommand EditChampionPageCommand { get; }
-    public ICommand DeleteChampionCommand { get; }
-    public ICommand CancelCommand { get; }
-    public ICommand BackCommand { get; }
-    public ICommand DetailSkinPageCommand { get; }
-    public ICommand AddSkinPageCommand { get; }
-    public ICommand EditSkinPageCommand { get; }
-    public ICommand DeleteSkinCommand { get; }
-    public ICommand CancelSkinCommand { get; }
-    
     public ApplicationVM(ChampionMgrVM mgrVM, EditApplicationChampionVM editAppChampionVM, EditApplicationSkinVM editAppSkinVM)
     {
         MgrVM = mgrVM;
         EditAppChampionVM = editAppChampionVM;
         EditAppSkinVM = editAppSkinVM;
-        
-        DetailPageCommand = new Command<ChampionVM>(OnDetailPageCommand);
-        
-        AddChampionPageCommand = new Command(OnAddChampionPageCommand);
-        EditChampionPageCommand = new Command<ChampionVM?>(OnEditChampionPageCommand);
-        DeleteChampionCommand = new Command<ChampionVM>(OnDeleteChampionCommand);
-        
-        CancelCommand = new Command(OnCancelCommand);
-        BackCommand = new Command(OnBackCommand);
-        
-        DetailSkinPageCommand = new Command<SkinVM>(OnDetailSkinPageCommand);
-        AddSkinPageCommand = new Command(OnAddSkinCommand);
-        EditSkinPageCommand = new Command<SkinVM?>(OnEditSkinPageCommand);
-        DeleteSkinCommand = new Command<SkinVM>(OnDeleteSkinCommand);
-        CancelSkinCommand = new Command(OnCancelSkinCommand);
     }
 
-    private async void OnDetailPageCommand(ChampionVM championVm)
+    [RelayCommand]
+    private async Task DetailPage(ChampionVM championVm)
     {
         MgrVM.SelectedChampion = championVm;
         await Shell.GoToAsync(nameof(ChampionDetailPage), true);
     }
     
-    private async void OnAddChampionPageCommand()
+    [RelayCommand]
+    private async Task AddChampionPage()
     {
         EditAppChampionVM.EditableChampion = new EditableChampionVM();
         await Shell.GoToAsync(nameof(AddChampionPage), true);
     }
     
-    private async void OnEditChampionPageCommand(ChampionVM? championVm)
+    [RelayCommand]
+    private async Task EditChampionPage(ChampionVM? championVm)
     {
         if (championVm is not null) MgrVM.SelectedChampion = championVm;
         
@@ -70,36 +46,42 @@ public class ApplicationVM: ObservableObject
         await Shell.GoToAsync(nameof(AddChampionPage), true);
     }
     
-    private async void OnDeleteChampionCommand(ChampionVM championVm) 
+    [RelayCommand]
+    private async Task DeleteChampion(ChampionVM championVm) 
         => await MgrVM.RemoveChampion(championVm);
     
     
-    private async void OnCancelCommand()
+    [RelayCommand]
+    private async Task Cancel()
     {
         EditAppChampionVM.EditableChampion = null;
         if (Shell.Navigation.NavigationStack.Count == 1) MgrVM.SelectedChampion = null;
         await Shell.GoToAsync("..", true);
     }
     
-    private async void OnBackCommand()
+    [RelayCommand]
+    private async Task Back()
     {
         if (Shell.Navigation.NavigationStack.Count == 1) MgrVM.SelectedChampion = null;
         await Shell.GoToAsync("..", true);
     }
     
-    private async void OnDetailSkinPageCommand(SkinVM skinVM)
+    [RelayCommand]
+    private async Task DetailSkinPage(SkinVM skinVM)
     {
         MgrVM.SelectedSkin = skinVM;
         await Shell.GoToAsync(nameof(SkinDetailPage), true);
     }
     
-    private async void OnAddSkinCommand()
+    [RelayCommand]
+    private async Task AddSkinPage()
     {
         EditAppSkinVM.EditableSkin = new EditableSkinVM();
         await Shell.GoToAsync(nameof(AddSkinPage), true);
     }
     
-    private async void OnEditSkinPageCommand(SkinVM? skinVM)
+    [RelayCommand]
+    private async Task EditSkinPage(SkinVM? skinVM)
     {
         if (skinVM is not null) MgrVM.SelectedSkin = skinVM;
         
@@ -107,9 +89,11 @@ public class ApplicationVM: ObservableObject
         await Shell.GoToAsync(nameof(AddSkinPage), true);
     }
     
-    private async void OnDeleteSkinCommand(SkinVM skin) => await MgrVM.RemoveSkin(skin);
-    
-    private async void OnCancelSkinCommand()
+    [RelayCommand]
+    private async Task DeleteSkin(SkinVM skin) => await MgrVM.RemoveSkin(skin);
+
+    [RelayCommand]
+    private async Task CancelSkin()
     {
         EditAppSkinVM.EditableSkin = null;
         if (Shell.Navigation.NavigationStack.Count == 2) MgrVM.SelectedSkin = null;

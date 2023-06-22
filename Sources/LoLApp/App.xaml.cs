@@ -1,6 +1,4 @@
-﻿using LoLApp.ViewModel;
-using Microsoft.Maui.Platform;
-using ViewModel;
+﻿using Microsoft.Maui.Platform;
 
 namespace LoLApp;
 

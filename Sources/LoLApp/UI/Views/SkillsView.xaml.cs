@@ -1,5 +1,4 @@
-﻿using ViewModel;
-using ViewModel.SkillVms;
+﻿using ViewModel.SkillVms;
 
 namespace LoLApp.UI.Views;
 
