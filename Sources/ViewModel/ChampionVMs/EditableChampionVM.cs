@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Model;
 using MVVMToolkit;
 using ViewModel.Enums;
@@ -8,42 +9,22 @@ using ViewModel.SkinVms;
 
 namespace ViewModel.ChampionVMs;
 
-public class EditableChampionVM: ObservableObject
+public partial class EditableChampionVM: ObservableObject
 {
-    public string? Name
-    {
-        get => name;
-        set => SetProperty(ref name, value);
-    } 
+    [ObservableProperty]
     private string? name;
 
-    public string? Bio
-    {
-        get => bio;
-        set => SetProperty(ref bio, value);
-    }
+    [ObservableProperty]
     private string? bio;
-
-    public string? Icon
-    {
-        get => icon;
-        set => SetProperty(ref icon, value);
-    }
+    
+    [ObservableProperty]
     private string? icon;
     
-    public string? Image
-    {
-        get => image;
-        set => SetProperty(ref image, value);
-    }
+    [ObservableProperty]
     private string? image;
-    
-    public ChampionClassVM Class
-    {
-        get => @class;
-        set => SetProperty(ref @class, value);
-    }
-    private ChampionClassVM @class;
+
+    [ObservableProperty] 
+    private ChampionClassVM _class;
     
     public ReadOnlyObservableCollection<EditableSkinVM> Skins { get; }
     private readonly ObservableCollection<EditableSkinVM> skins;

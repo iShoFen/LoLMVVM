@@ -1,46 +1,26 @@
-﻿using Model;
-using MVVMToolkit;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Model;
 using ViewModel.ChampionVMs;
 
 namespace ViewModel.SkinVms;
 
-public class EditableSkinVM: ObservableObject
+public partial class EditableSkinVM: ObservableObject
 {
     internal SkinVM? Model { get; }
 
-    public string? Name
-    {
-        get => name;
-        set => SetProperty(ref name, value);
-    }
+    [ObservableProperty]
     private string? name;
     
-    public string? Description
-    {
-        get => description;
-        set => SetProperty(ref description, value);
-    }
+    [ObservableProperty]
     private string? description;
 
-    public string? Icon
-    {
-        get => icon;
-        set => SetProperty(ref icon, value);
-    }
+    [ObservableProperty]
     private string? icon;
 
-    public string? Image
-    {
-        get => image;
-        set => SetProperty(ref image, value);
-    }
+    [ObservableProperty]
     private string? image = string.Empty;
 
-    public float? Price
-    {
-        get => price;
-        set => SetProperty(ref price, value);
-    }
+    [ObservableProperty]
     private float? price;
     
     public EditableSkinVM() { }

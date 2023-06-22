@@ -1,33 +1,21 @@
-﻿using Model;
-using MVVMToolkit;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Model;
 using ViewModel.Enums;
 using ViewModel.Mappers;
 
 namespace ViewModel.SkillVms;
 
-public class EditableSkillVM: ObservableObject
+public partial class EditableSkillVM: ObservableObject
 {
     internal SkillVM? Model { get; }
     
-    public string? Name
-    {
-        get => name;
-        set => SetProperty(ref name, value);
-    }
+    [ObservableProperty]
     private string? name;
 
-    public SkillTypeVM Type
-    {
-        get => type;
-        set => SetProperty(ref type, value);
-    }
+    [ObservableProperty]
     private SkillTypeVM type;
 
-    public string? Description
-    {
-        get => description;
-        set => SetProperty(ref description, value);
-    }
+    [ObservableProperty]
     private string? description;
     
     public EditableSkillVM(SkillVM model)

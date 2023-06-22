@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Windows.Input;
-using Microsoft.Maui.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Model;
 using MVVMToolkit;
 using ViewModel.ChampionVMs;
@@ -10,108 +10,81 @@ using ViewModel.SkinVms;
 namespace ViewModel;
 
 [SuppressMessage("Interoperability", "CA1416")]
-public class ChampionMgrVM : ObservableObject<IDataManager>
+public partial class ChampionMgrVM : ObservableObject<IDataManager>
 {
     public ReadOnlyObservableCollection<ChampionVM> Champions { get; }
     private readonly ObservableCollection<ChampionVM> champions = new();
 
     public int Page => GetPageCount().Result;
-
+    
+    // We cannot use ObservableProperty and NotifyCanExecuteChangedFor cause Index property return index + 1
     public int Index
     {
         get => index + 1;
         set => SetProperty(ref index, value - 1);
     }
-
     private int index;
-
-    public int Count
-    {
-        get => count;
-        set => SetProperty(ref count, value);
-    }
-
+    
+    [ObservableProperty]
     private int count = 5;
 
-    public bool IsOrderedDescending
-    {
-        get => isOrderedDescending;
-        set => SetProperty(ref isOrderedDescending, value);
-    }
-
+    [ObservableProperty]
     private bool isOrderedDescending;
     
-    public ChampionVM? SelectedChampion
-    {
-        get => selectedChampion;
-        set => SetProperty(ref selectedChampion, value);
-    }
+    [ObservableProperty]
     private ChampionVM? selectedChampion;
     
-    public SkinVM? SelectedSkin
-    {
-        get => selectedSkin;
-        set => SetProperty(ref selectedSkin, value);
-    }
+    [ObservableProperty]
     private SkinVM? selectedSkin;
     
-    public ICommand LoadChampionsCommand { get; }
-
-    public ICommand SortChampionCommand { get; }
-
-    public ICommand PreviousPageCommand { get; }
-
-    public ICommand NextPageCommand { get; }
-
-    public ChampionMgrVM(IDataManager model) : base(model)
-    {
-        Champions = new ReadOnlyObservableCollection<ChampionVM>(champions);
-
-        LoadChampionsCommand = new Command(ExecuteLoad);
-        SortChampionCommand = new Command(SortChampion);
-
-        PreviousPageCommand = new Command(PreviousPage, () => index > 0);
-        NextPageCommand = new Command(NextPage, () => index < Page - 1);
-    }
+    public ChampionMgrVM(IDataManager model) : base(model) 
+        => Champions = new ReadOnlyObservableCollection<ChampionVM>(champions);
 
     private async Task Update()
     {
         if (Index > Page) Index = Page;
         await LoadChampions();
-        (PreviousPageCommand as Command)?.ChangeCanExecute();
-        (NextPageCommand as Command)?.ChangeCanExecute();
+        
+        // need to manually notify the command to update the CanExecute (because we cannot use ObservableProperty)
+        PreviousPageCommand.NotifyCanExecuteChanged();
+        NextPageCommand.NotifyCanExecuteChanged();
     }
 
-    // Only done to avoid the warning for (using async on void method is not recommended)
-    private async void ExecuteLoad() => await LoadChampions();
-
+    [RelayCommand]
     private async Task LoadChampions()
     {
         champions.Clear();
-        var champs = await Model.ChampionsMgr.GetItems(index, count, nameof(Champion.Name), IsOrderedDescending);
+        var champs = await Model.ChampionsMgr.GetItems(index, Count, nameof(Champion.Name), IsOrderedDescending);
         foreach (var champion in champs.Where(champion => champion != null))
         {
             champions.Add(new ChampionVM(champion!));
         }
     }
 
-    private async void SortChampion()
+    [RelayCommand]
+    private async Task SortChampion()
     {
         IsOrderedDescending = !IsOrderedDescending;
         await LoadChampions();
     }
 
-    private async void PreviousPage()
+    [RelayCommand(CanExecute = nameof(CanPreviousPage))]
+    private async Task PreviousPage()
     {
         Index -= 1;
         await Update();
     }
+    
+    private bool CanPreviousPage() => index > 0;
 
-    private async void NextPage()
+    [RelayCommand(CanExecute = nameof(CanNextPage))]
+    private async Task NextPage()
     {
         Index += 1;
         await Update();
     }
+    
+    private bool CanNextPage() => index < Page - 1;
     
     private async Task<int> GetPageCount()
     {
@@ -150,7 +123,7 @@ public class ChampionMgrVM : ObservableObject<IDataManager>
     }
     
     public async Task<bool> AddSkin(SkinVM skin) => await Model.SkinsMgr.AddItem(skin.Model) != null;
-
+    
     public async Task<bool> UpdateSkin(SkinVM skin) 
         => await Model.SkinsMgr.UpdateItem(SelectedSkin!.Model, skin.Model) != null;
 
