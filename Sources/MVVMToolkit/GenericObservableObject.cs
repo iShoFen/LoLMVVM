@@ -1,4 +1,6 @@
-﻿namespace MVVMToolkit;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace MVVMToolkit;
 
 /// <summary>
 /// A generic version of <see cref="ObservableObject"/> That define a <see cref="Model"/> property
